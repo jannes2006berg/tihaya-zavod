@@ -9,7 +9,6 @@
         
         :root {
             --dark: #0a3d2b;
-            --green: #1a5f3f;
             --light-green: #4a9c6e;
         }
         
@@ -23,7 +22,6 @@
             overflow-x: hidden;
         }
 
-        /* Пузырьки */
         .bubbles {
             position: fixed;
             top: 0; left: 0;
@@ -55,64 +53,37 @@
             z-index: 1000;
         }
         
-        .logo {
-            font-size: 1.9rem;
-            font-weight: bold;
-            color: var(--light-green);
-        }
+        .logo { font-size: 1.9rem; font-weight: bold; color: var(--light-green); }
 
         nav a {
             color: #e8d5b7;
             margin-left: 1.8rem;
             text-decoration: none;
-            font-weight: 500;
         }
 
         .hero {
             height: 100vh;
-            min-height: 600px;
-            background: linear-gradient(rgba(10,61,43,0.65), rgba(10,61,43,0.8)), 
-                        url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            min-height: 580px;
+            background: linear-gradient(rgba(10,61,43,0.65), rgba(10,61,43,0.8)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
         }
         
         .hero h1 {
             font-size: 3.8rem;
             font-family: 'Playfair Display', serif;
             color: white;
-            margin-bottom: 1rem;
             animation: titleReveal 2.6s ease forwards;
         }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .hero p { font-size: 1.3rem; }
-            nav a { margin-left: 1rem; font-size: 0.95rem; }
-        }
-
         @keyframes titleReveal {
             0% { opacity: 0; transform: translateY(80px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        .hero p {
-            font-size: 1.55rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
         section { padding: 90px 5%; position: relative; z-index: 2; }
-        
-        h2 { 
-            font-size: 2.8rem; 
-            text-align: center; 
-            margin-bottom: 3rem; 
-            color: var(--light-green);
-        }
+        h2 { font-size: 2.8rem; text-align: center; margin-bottom: 3rem; color: var(--light-green); }
 
         .grid {
             display: grid;
@@ -130,15 +101,15 @@
         }
         
         .card:hover {
-            transform: translateY(-12px);
-            background: rgba(255,255,255,0.14);
+            transform: translateY(-15px);
+            background: rgba(255,255,255,0.16);
         }
 
         .form-container {
             max-width: 580px;
             margin: 0 auto;
             background: rgba(255,255,255,0.09);
-            padding: 2.5rem;
+            padding: 2.8rem;
             border-radius: 24px;
         }
 
@@ -159,21 +130,14 @@
             border: none;
             border-radius: 50px;
             font-size: 1.1rem;
-            cursor: pointer;
             width: 100%;
+            cursor: pointer;
         }
 
         footer {
             background: #08291f;
             padding: 3rem 5% 2rem;
             text-align: center;
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 480px) {
-            section { padding: 70px 5%; }
-            h2 { font-size: 2.4rem; }
-            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -237,7 +201,7 @@
                 <textarea id="message" rows="4" placeholder="Дополнительная информация..."></textarea>
                 
                 <button type="submit">Отправить заявку</button>
-                <div id="successMessage" style="color:#4a9c6e; text-align:center; margin-top:15px;"></div>
+                <div id="successMessage" style="color:#4a9c6e; text-align:center; margin-top:15px; font-weight:bold;"></div>
             </form>
         </div>
     </section>
@@ -253,25 +217,39 @@
             for (let i = 0; i < 30; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
-                const size = Math.random() * 16 + 6;
+                const size = Math.random() * 18 + 8;
                 bubble.style.width = `${size}px`;
                 bubble.style.height = `${size}px`;
                 bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 7 + 8}s`;
-                bubble.style.animationDelay = `-${Math.random() * 15}s`;
+                bubble.style.animationDuration = `${Math.random() * 8 + 8}s`;
+                bubble.style.animationDelay = `-${Math.random() * 20}s`;
                 container.appendChild(bubble);
             }
         }
 
         function openOrderForm(service) {
-            document.getElementById('service').value = service;
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            const serviceInput = document.getElementById('service');
+            serviceInput.value = service;
+            
+            // Плавный скролл к форме
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            // Лёгкая анимация поля
+            serviceInput.style.transition = 'all 0.4s';
+            serviceInput.style.background = '#4a9c6e';
+            setTimeout(() => {
+                serviceInput.style.background = 'rgba(255,255,255,0.1)';
+            }, 800);
         }
 
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const msg = document.getElementById('successMessage');
-            msg.textContent = '✅ Заявка отправлена! Скоро свяжемся с вами.';
+            msg.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+            
             setTimeout(() => {
                 this.reset();
                 document.getElementById('service').value = '';
@@ -281,7 +259,6 @@
 
         window.onload = () => {
             createBubbles();
-            // Перезапуск анимации заголовка
             const title = document.getElementById('main-title');
             title.style.animation = 'none';
             void title.offsetWidth;
