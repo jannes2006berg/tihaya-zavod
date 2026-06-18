@@ -6,81 +6,172 @@
     <title>Тихая Заводь — Рыбалка</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-        
+      
         :root {
             --dark: #0a3d2b;
             --light-green: #4a9c6e;
         }
-        
+      
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+      
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--dark);
             color: #e8d5b7;
             line-height: 1.6;
+            overflow-x: hidden;
         }
-
-        .bubbles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        
+        /* Плавающие рыбки по фону */
+        .fish {
+            position: absolute;
+            font-size: 2.8rem;
+            opacity: 0.18;
+            z-index: 1;
+            animation: swim 32s linear infinite;
+            user-select: none;
+            pointer-events: none;
+        }
+        @keyframes swim {
+            0% { transform: translateX(-150px) rotate(-12deg); }
+            100% { transform: translateX(110vw) rotate(18deg); }
+        }
+        
+        .bubbles { 
+            position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            pointer-events: none; z-index: 2; 
+            overflow: hidden; 
+        }
         .bubble {
             position: absolute;
             background: rgba(255,255,255,0.15);
             border-radius: 50%;
             animation: rise 10s linear infinite;
         }
-        @keyframes rise { 0% { transform: translateY(100vh); } 100% { transform: translateY(-100px); } }
+        @keyframes rise { 
+            0% { transform: translateY(100vh); } 
+            100% { transform: translateY(-100px); } 
+        }
 
         header {
             position: fixed;
             top: 0; width: 100%;
             background: rgba(10, 61, 43, 0.97);
-            padding: 1rem 5%;
+            padding: 1.2rem 5%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             z-index: 1000;
         }
-        .logo { font-size: 1.9rem; font-weight: bold; color: var(--light-green); }
+        .logo { font-size: 2.2rem; font-weight: bold; color: var(--light-green); }
 
         .hero {
             height: 100vh;
             min-height: 580px;
-            background: linear-gradient(rgba(10,61,43,0.7), rgba(10,61,43,0.8)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            background: linear-gradient(rgba(10,61,43,0.75), rgba(10,61,43,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+            z-index: 3;
         }
         .hero h1 {
-            font-size: 3.6rem;
+            font-size: 3.7rem;
             font-family: 'Playfair Display', serif;
             color: white;
-            animation: titleReveal 2.6s ease forwards;
+            line-height: 1.05;
         }
-        @keyframes titleReveal { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: translateY(0); } }
+        .split-char {
+            display: inline-block;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
 
-        section { padding: 90px 5%; position: relative; z-index: 2; }
+        section { padding: 90px 5%; position: relative; z-index: 3; }
         h2 { font-size: 2.8rem; text-align: center; margin-bottom: 3rem; color: var(--light-green); }
-
+        
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
-        .card {
+        /* ========== РАСКРЫВАЮЩИЕСЯ КАРТОЧКИ ========== */
+        .expandable-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .expandable-card:hover {
+            transform: translateY(-8px);
+            background: rgba(74, 156, 110, 0.22);
+        }
+        .card-header {
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+        }
+        .card-header h3 {
+            font-size: 1.8rem;
+            color: var(--light-green);
+            margin-bottom: 8px;
+        }
+        .card-content {
+            max-height: 0;
+            padding: 0 1.8rem;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+            background: rgba(255,255,255,0.06);
+        }
+        .expandable-card.active .card-content {
+            max-height: 680px;
+            opacity: 1;
+            padding: 1.8rem 1.8rem 2.2rem;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Зелёные минималистичные рыбки */
+        .card-fish {
+            position: absolute;
+            font-size: 1.7rem;
+            color: var(--light-green);
+            opacity: 0.32;
+            z-index: 2;
+            pointer-events: none;
+            animation: cardSwim 26s linear infinite;
+        }
+        @keyframes cardSwim {
+            0% { transform: translateX(-45px) rotate(-10deg); }
+            100% { transform: translateX(360px) rotate(10deg); }
+        }
+
+        /* ========== КРАСИВЫЕ КАРТОЧКИ УСЛУГ ========== */
+        .service-card {
             background: rgba(255,255,255,0.08);
             padding: 2.8rem 1.5rem;
             border-radius: 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.4s ease;
         }
-        .card:hover {
+        .service-card:hover {
             transform: translateY(-15px);
             background: rgba(74, 156, 110, 0.3);
         }
 
+        /* ========== КРАСИВАЯ ФОРМА ========== */
         .form-container {
             max-width: 580px;
             margin: 0 auto;
@@ -88,25 +179,22 @@
             padding: 2.8rem;
             border-radius: 24px;
         }
-
         input, textarea, select {
             width: 100%;
-            padding: 14px;
+            padding: 14px 16px;
             margin: 10px 0;
             background: rgba(255,255,255,0.1);
             border: 1px solid #4a9c6e;
             border-radius: 12px;
             color: #e8d5b7;
             font-size: 1.05rem;
+            transition: all 0.3s;
         }
-
-        /* Зеленый текст при выборе услуги */
-        select#service option:checked,
-        select#service:not([value=""]) {
-            color: var(--light-green) !important;
-            font-weight: 500;
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #6ed99a;
+            background: rgba(255,255,255,0.15);
         }
-
         button {
             background: var(--light-green);
             color: white;
@@ -116,61 +204,100 @@
             width: 100%;
             font-size: 1.1rem;
             cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5ec18a;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-
     <div class="bubbles" id="bubbles"></div>
+    
+    <!-- Фоновые рыбки -->
+    <div class="fish" style="top: 15%; animation-delay: 0s;">🐟</div>
+    <div class="fish" style="top: 38%; animation-delay: 6s; font-size: 2.4rem;">🐠</div>
+    <div class="fish" style="top: 72%; animation-delay: 13s;">🐟</div>
+    <div class="fish" style="top: 28%; animation-delay: 19s; font-size: 2.1rem;">🐠</div>
+    <div class="fish" style="top: 55%; animation-delay: 25s;">🐟</div>
 
     <header>
         <a href="#" class="logo">Тихая Заводь</a>
-        <nav>
-            <a href="#about">О нас</a>
-            <a href="#services">Услуги</a>
-            <a href="#gallery">Галерея</a>
-            <a href="#contact">Контакты</a>
-        </nav>
     </header>
-
+    
     <section class="hero">
         <div>
-            <h1 id="main-title">Рыбалка, о которой мечтают</h1>
+            <h1 id="main-title">Рыбалка,<br>о которой мечтают</h1>
             <p>Уединённая база отдыха с богатым клёвом</p>
         </div>
     </section>
-
+    
     <section id="about">
         <h2>Почему выбирают нас</h2>
         <div class="grid">
-            <div class="card"><h3>10+ лет</h3><p>Опыт и проверенные места</p></div>
-            <div class="card"><h3>Комфорт</h3><p>Современные домики, баня, лодки</p></div>
-            <div class="card"><h3>Природа</h3><p>Тишина и чистый воздух</p></div>
+            <div class="expandable-card">
+                <div class="card-header">
+                    <h3>10+ лет</h3>
+                    <p>Опыт и проверенные места</p>
+                </div>
+                <div class="card-content">
+                    <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" class="card-image" alt="Опыт" loading="lazy">
+                    <p>За более чем 10 лет мы изучили все лучшие места на водоёме. Наши гости всегда возвращаются с хорошим уловом.</p>
+                </div>
+                <div class="card-fish" style="top: 42%; left: -30px; animation-delay: 0s;">🐟</div>
+            </div>
+            
+            <div class="expandable-card">
+                <div class="card-header">
+                    <h3>Комфорт</h3>
+                    <p>Современные домики, баня, лодки</p>
+                </div>
+                <div class="card-content">
+                    <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" class="card-image" alt="Комфорт" loading="lazy">
+                    <p>Уютные домики со всеми удобствами, русская баня на берегу, новые лодки с моторами.</p>
+                </div>
+                <div class="card-fish" style="top: 52%; left: -35px; font-size: 2.05rem; animation-delay: 7s;">🐠</div>
+            </div>
+            
+            <div class="expandable-card">
+                <div class="card-header">
+                    <h3>Природа</h3>
+                    <p>Тишина и чистый воздух</p>
+                </div>
+                <div class="card-content">
+                    <img src="https://picsum.photos/id/1015/800/600" class="card-image" alt="Природа" loading="lazy">
+                    <p>Уединённая территория вдали от шумных мест. Чистейший воздух и потрясающие виды.</p>
+                </div>
+                <div class="card-fish" style="top: 38%; left: -25px; animation-delay: 13s;">🐟</div>
+            </div>
         </div>
     </section>
-
+    
+    <!-- ========== КРАСИВЫЕ КАРТОЧКИ УСЛУГ ========== -->
     <section id="services" style="background: #0f4a36;">
         <h2>Наши услуги</h2>
         <div class="grid">
-            <div class="card" onclick="selectService('Платная рыбалка')">
+            <div class="service-card" onclick="selectService('Платная рыбалка')">
                 <h3>Платная рыбалка</h3>
                 <p>от 1 500 ₽ / день</p>
             </div>
-            <div class="card" onclick="selectService('Аренда домиков')">
+            <div class="service-card" onclick="selectService('Аренда домиков')">
                 <h3>Аренда домиков</h3>
                 <p>от 3 000 ₽ / сутки</p>
             </div>
-            <div class="card" onclick="selectService('Туры с проводником')">
+            <div class="service-card" onclick="selectService('Туры с проводником')">
                 <h3>Туры с проводником</h3>
                 <p>Полный пакет</p>
             </div>
-            <div class="card" onclick="selectService('Аренда лодок')">
+            <div class="service-card" onclick="selectService('Аренда лодок')">
                 <h3>Аренда лодок</h3>
                 <p>от 2 000 ₽ / день</p>
             </div>
         </div>
     </section>
-
+    
     <section id="gallery">
         <h2>Галерея</h2>
         <div class="grid">
@@ -178,7 +305,8 @@
             <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" style="width:100%; border-radius:20px;" alt="">
         </div>
     </section>
-
+    
+    <!-- ========== КРАСИВАЯ ФОРМА ========== -->
     <section id="contact" style="background: #0f4a36;">
         <h2>Оформить заявку</h2>
         <div class="form-container">
@@ -190,32 +318,67 @@
                     <option value="Туры с проводником">Туры с проводником — Полный пакет</option>
                     <option value="Аренда лодок">Аренда лодок — от 2 000 ₽ / день</option>
                 </select>
-                
                 <input type="text" id="name" placeholder="Ваше имя" required>
                 <input type="tel" id="phone" placeholder="Телефон" required>
                 <input type="date" id="date">
                 <textarea id="message" rows="4" placeholder="Дополнительная информация..."></textarea>
-                
                 <button type="submit">Отправить заявку</button>
                 <div id="successMessage" style="color:#4a9c6e; text-align:center; margin-top:15px; font-weight:bold;"></div>
             </form>
         </div>
     </section>
-
+    
     <footer>
         <p>&copy; 2026 Тихая Заводь — Рыбалка в уединении</p>
         <p style="margin-top:8px; opacity:0.7;">Сайт создан Берг Яннес</p>
     </footer>
 
     <script>
-        function selectService(serviceName) {
-            const select = document.getElementById('service');
-            select.value = serviceName;
-            
-            document.getElementById('contact').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
+        function splitAndAnimateTitle() {
+            const title = document.getElementById('main-title');
+            if (!title) return;
+            const text = title.textContent.trim();
+            title.innerHTML = '';
+            text.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.className = 'split-char';
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                title.appendChild(span);
             });
+            const chars = title.querySelectorAll('.split-char');
+            chars.forEach((char, i) => {
+                setTimeout(() => char.style.opacity = '1', i * 32);
+            });
+        }
+
+        function initCards() {
+            document.querySelectorAll('.expandable-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.card-content')) return;
+                    this.classList.toggle('active');
+                });
+            });
+        }
+
+        function selectService(serviceName) {
+            document.getElementById('service').value = serviceName;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            container.innerHTML = '';
+            for (let i = 0; i < 28; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 24 + 8;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                bubble.style.animationDelay = `-${Math.random() * 25}s`;
+                container.appendChild(bubble);
+            }
         }
 
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
@@ -227,27 +390,11 @@
             }, 4000);
         });
 
-        function createBubbles() {
-            const container = document.getElementById('bubbles');
-            for (let i = 0; i < 25; i++) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                const size = Math.random() * 20 + 8;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 8 + 9}s`;
-                bubble.style.animationDelay = `-${Math.random() * 20}s`;
-                container.appendChild(bubble);
-            }
-        }
-
         window.onload = () => {
             createBubbles();
-            const title = document.getElementById('main-title');
-            title.style.animation = 'none';
-            void title.offsetWidth;
-            title.style.animation = 'titleReveal 2.6s ease forwards';
+            initCards();
+            splitAndAnimateTitle();
+            setTimeout(splitAndAnimateTitle, 700);
         };
     </script>
 </body>
