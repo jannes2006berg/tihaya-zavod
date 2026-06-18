@@ -19,32 +19,20 @@
             background-color: var(--dark);
             color: #e8d5b7;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        .bubbles {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
+        .bubbles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
         .bubble {
             position: absolute;
             background: rgba(255,255,255,0.15);
             border-radius: 50%;
-            animation: rise 8s linear infinite;
+            animation: rise 10s linear infinite;
         }
-        @keyframes rise {
-            0% { transform: translateY(100vh) scale(0.5); }
-            100% { transform: translateY(-100px) scale(1.2); }
-        }
+        @keyframes rise { 0% { transform: translateY(100vh); } 100% { transform: translateY(-100px); } }
 
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             background: rgba(10, 61, 43, 0.97);
             padding: 1rem 5%;
             display: flex;
@@ -52,35 +40,24 @@
             align-items: center;
             z-index: 1000;
         }
-        
         .logo { font-size: 1.9rem; font-weight: bold; color: var(--light-green); }
-
-        nav a {
-            color: #e8d5b7;
-            margin-left: 1.8rem;
-            text-decoration: none;
-        }
 
         .hero {
             height: 100vh;
             min-height: 580px;
-            background: linear-gradient(rgba(10,61,43,0.65), rgba(10,61,43,0.8)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            background: linear-gradient(rgba(10,61,43,0.7), rgba(10,61,43,0.8)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
-        
         .hero h1 {
-            font-size: 3.8rem;
+            font-size: 3.6rem;
             font-family: 'Playfair Display', serif;
             color: white;
             animation: titleReveal 2.6s ease forwards;
         }
-        @keyframes titleReveal {
-            0% { opacity: 0; transform: translateY(80px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes titleReveal { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: translateY(0); } }
 
         section { padding: 90px 5%; position: relative; z-index: 2; }
         h2 { font-size: 2.8rem; text-align: center; margin-bottom: 3rem; color: var(--light-green); }
@@ -93,16 +70,15 @@
 
         .card {
             background: rgba(255,255,255,0.08);
-            padding: 2.5rem 1.5rem;
+            padding: 2.8rem 1.5rem;
             border-radius: 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s;
         }
-        
         .card:hover {
             transform: translateY(-15px);
-            background: rgba(255,255,255,0.16);
+            background: rgba(74, 156, 110, 0.3);
         }
 
         .form-container {
@@ -113,14 +89,22 @@
             border-radius: 24px;
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 14px;
             margin: 10px 0;
             background: rgba(255,255,255,0.1);
             border: 1px solid #4a9c6e;
             border-radius: 12px;
-            color: white;
+            color: #e8d5b7;
+            font-size: 1.05rem;
+        }
+
+        /* Зеленый текст при выборе услуги */
+        select#service option:checked,
+        select#service:not([value=""]) {
+            color: var(--light-green) !important;
+            font-weight: 500;
         }
 
         button {
@@ -129,15 +113,9 @@
             padding: 16px;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
             width: 100%;
+            font-size: 1.1rem;
             cursor: pointer;
-        }
-
-        footer {
-            background: #08291f;
-            padding: 3rem 5% 2rem;
-            text-align: center;
         }
     </style>
 </head>
@@ -158,35 +136,46 @@
     <section class="hero">
         <div>
             <h1 id="main-title">Рыбалка, о которой мечтают</h1>
-            <p>Уединённая база отдыха с богатым клёвом и настоящим единением с природой</p>
+            <p>Уединённая база отдыха с богатым клёвом</p>
         </div>
     </section>
 
     <section id="about">
         <h2>Почему выбирают нас</h2>
         <div class="grid">
-            <div class="card"><h3>10+ лет</h3><p>Опыт и проверенные рыбные места</p></div>
+            <div class="card"><h3>10+ лет</h3><p>Опыт и проверенные места</p></div>
             <div class="card"><h3>Комфорт</h3><p>Современные домики, баня, лодки</p></div>
-            <div class="card"><h3>Природа</h3><p>Тишина, чистый воздух и потрясающие виды</p></div>
+            <div class="card"><h3>Природа</h3><p>Тишина и чистый воздух</p></div>
         </div>
     </section>
 
     <section id="services" style="background: #0f4a36;">
         <h2>Наши услуги</h2>
         <div class="grid">
-            <div class="card" onclick="openOrderForm('Платная рыбалка')">Платная рыбалка<br><small>от 1 500 ₽ / день</small></div>
-            <div class="card" onclick="openOrderForm('Аренда домиков')">Аренда домиков<br><small>от 3 000 ₽ / сутки</small></div>
-            <div class="card" onclick="openOrderForm('Туры с проводником')">Туры с проводником<br><small>Полный пакет</small></div>
-            <div class="card" onclick="openOrderForm('Аренда лодок')">Аренда лодок<br><small>от 2 000 ₽ / день</small></div>
+            <div class="card" onclick="selectService('Платная рыбалка')">
+                <h3>Платная рыбалка</h3>
+                <p>от 1 500 ₽ / день</p>
+            </div>
+            <div class="card" onclick="selectService('Аренда домиков')">
+                <h3>Аренда домиков</h3>
+                <p>от 3 000 ₽ / сутки</p>
+            </div>
+            <div class="card" onclick="selectService('Туры с проводником')">
+                <h3>Туры с проводником</h3>
+                <p>Полный пакет</p>
+            </div>
+            <div class="card" onclick="selectService('Аренда лодок')">
+                <h3>Аренда лодок</h3>
+                <p>от 2 000 ₽ / день</p>
+            </div>
         </div>
     </section>
 
     <section id="gallery">
         <h2>Галерея</h2>
         <div class="grid">
-            <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
-            <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
-            <img src="https://images.pexels.com/photos/19040476/pexels-photo-19040476.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
+            <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" style="width:100%; border-radius:20px;" alt="">
+            <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" style="width:100%; border-radius:20px;" alt="">
         </div>
     </section>
 
@@ -194,7 +183,14 @@
         <h2>Оформить заявку</h2>
         <div class="form-container">
             <form id="bookingForm">
-                <input type="text" id="service" readonly placeholder="Выбранная услуга">
+                <select id="service" required>
+                    <option value="">Выберите услугу</option>
+                    <option value="Платная рыбалка">Платная рыбалка — от 1 500 ₽ / день</option>
+                    <option value="Аренда домиков">Аренда домиков — от 3 000 ₽ / сутки</option>
+                    <option value="Туры с проводником">Туры с проводником — Полный пакет</option>
+                    <option value="Аренда лодок">Аренда лодок — от 2 000 ₽ / день</option>
+                </select>
+                
                 <input type="text" id="name" placeholder="Ваше имя" required>
                 <input type="tel" id="phone" placeholder="Телефон" required>
                 <input type="date" id="date">
@@ -208,54 +204,43 @@
 
     <footer>
         <p>&copy; 2026 Тихая Заводь — Рыбалка в уединении</p>
-        <p style="margin-top: 8px; opacity: 0.7;">Сайт создан Берг Яннес</p>
+        <p style="margin-top:8px; opacity:0.7;">Сайт создан Берг Яннес</p>
     </footer>
 
     <script>
-        function createBubbles() {
-            const container = document.getElementById('bubbles');
-            for (let i = 0; i < 30; i++) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                const size = Math.random() * 18 + 8;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 8 + 8}s`;
-                bubble.style.animationDelay = `-${Math.random() * 20}s`;
-                container.appendChild(bubble);
-            }
-        }
-
-        function openOrderForm(service) {
-            const serviceInput = document.getElementById('service');
-            serviceInput.value = service;
+        function selectService(serviceName) {
+            const select = document.getElementById('service');
+            select.value = serviceName;
             
-            // Плавный скролл к форме
-            document.getElementById('contact').scrollIntoView({
+            document.getElementById('contact').scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'center'
             });
-
-            // Лёгкая анимация поля
-            serviceInput.style.transition = 'all 0.4s';
-            serviceInput.style.background = '#4a9c6e';
-            setTimeout(() => {
-                serviceInput.style.background = 'rgba(255,255,255,0.1)';
-            }, 800);
         }
 
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const msg = document.getElementById('successMessage');
-            msg.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-            
+            document.getElementById('successMessage').textContent = '✅ Заявка отправлена!';
             setTimeout(() => {
                 this.reset();
-                document.getElementById('service').value = '';
-                msg.textContent = '';
-            }, 5000);
+                document.getElementById('successMessage').textContent = '';
+            }, 4000);
         });
+
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            for (let i = 0; i < 25; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 20 + 8;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.animationDuration = `${Math.random() * 8 + 9}s`;
+                bubble.style.animationDelay = `-${Math.random() * 20}s`;
+                container.appendChild(bubble);
+            }
+        }
 
         window.onload = () => {
             createBubbles();
