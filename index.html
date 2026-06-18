@@ -23,26 +23,21 @@
             overflow-x: hidden;
         }
 
-        /* Плавающие пузырьки */
+        /* Пузырьки */
         .bubbles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
         }
-        
         .bubble {
             position: absolute;
             background: rgba(255,255,255,0.15);
             border-radius: 50%;
             animation: rise 8s linear infinite;
-            opacity: 0.6;
         }
-        
         @keyframes rise {
             0% { transform: translateY(100vh) scale(0.5); }
             100% { transform: translateY(-100px) scale(1.2); }
@@ -52,8 +47,8 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 61, 43, 0.95);
-            padding: 1.2rem 6%;
+            background: rgba(10, 61, 43, 0.97);
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -61,24 +56,22 @@
         }
         
         .logo {
-            font-size: 2.2rem;
+            font-size: 1.9rem;
             font-weight: bold;
             color: var(--light-green);
-            text-decoration: none;
         }
-        
+
         nav a {
             color: #e8d5b7;
-            margin-left: 2.5rem;
+            margin-left: 1.8rem;
             text-decoration: none;
             font-weight: 500;
         }
-        
-        nav a:hover { color: var(--light-green); }
 
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(10,61,43,0.6), rgba(10,61,43,0.75)), 
+            min-height: 600px;
+            background: linear-gradient(rgba(10,61,43,0.65), rgba(10,61,43,0.8)), 
                         url('https://picsum.photos/id/1015/1920/1080') center/cover;
             display: flex;
             align-items: center;
@@ -88,79 +81,71 @@
         }
         
         .hero h1 {
-            font-size: 5.2rem;
+            font-size: 3.8rem;
             font-family: 'Playfair Display', serif;
             color: white;
             margin-bottom: 1rem;
             animation: titleReveal 2.6s ease forwards;
-            position: relative;
-            z-index: 2;
         }
         
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.3rem; }
+            nav a { margin-left: 1rem; font-size: 0.95rem; }
+        }
+
         @keyframes titleReveal {
-            0% { opacity: 0; transform: translateY(90px); }
+            0% { opacity: 0; transform: translateY(80px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         .hero p {
-            font-size: 1.7rem;
-            max-width: 720px;
+            font-size: 1.55rem;
+            max-width: 700px;
             margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
-        section { padding: 110px 6%; position: relative; z-index: 2; }
+        section { padding: 90px 5%; position: relative; z-index: 2; }
+        
         h2 { 
-            font-size: 3.3rem; 
+            font-size: 2.8rem; 
             text-align: center; 
-            margin-bottom: 4rem; 
+            margin-bottom: 3rem; 
             color: var(--light-green);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
         .card {
             background: rgba(255,255,255,0.08);
-            padding: 3rem 2rem;
-            border-radius: 28px;
+            padding: 2.5rem 1.5rem;
+            border-radius: 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.4s ease;
         }
         
         .card:hover {
-            transform: translateY(-18px);
+            transform: translateY(-12px);
             background: rgba(255,255,255,0.14);
         }
 
-        .card::after {
-            content: '🐟';
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0.08;
-            bottom: 20px;
-            right: 20px;
-        }
-
         .form-container {
-            max-width: 620px;
+            max-width: 580px;
             margin: 0 auto;
             background: rgba(255,255,255,0.09);
-            padding: 3rem;
-            border-radius: 28px;
+            padding: 2.5rem;
+            border-radius: 24px;
         }
 
         input, textarea {
             width: 100%;
             padding: 14px;
-            margin: 12px 0;
+            margin: 10px 0;
             background: rgba(255,255,255,0.1);
             border: 1px solid #4a9c6e;
             border-radius: 12px;
@@ -170,24 +155,30 @@
         button {
             background: var(--light-green);
             color: white;
-            padding: 16px 50px;
+            padding: 16px;
             border: none;
             border-radius: 50px;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             cursor: pointer;
             width: 100%;
         }
 
         footer {
             background: #08291f;
-            padding: 4rem 6% 2rem;
+            padding: 3rem 5% 2rem;
             text-align: center;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 480px) {
+            section { padding: 70px 5%; }
+            h2 { font-size: 2.4rem; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Плавающие пузырьки -->
     <div class="bubbles" id="bubbles"></div>
 
     <header>
@@ -246,39 +237,30 @@
                 <textarea id="message" rows="4" placeholder="Дополнительная информация..."></textarea>
                 
                 <button type="submit">Отправить заявку</button>
-                <div id="successMessage" class="success"></div>
+                <div id="successMessage" style="color:#4a9c6e; text-align:center; margin-top:15px;"></div>
             </form>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2026 Тихая Заводь — Рыбалка в уединении</p>
-        <p style="margin-top: 10px; opacity: 0.7;">Сайт создан Берг Яннес</p>
+        <p style="margin-top: 8px; opacity: 0.7;">Сайт создан Берг Яннес</p>
     </footer>
 
     <script>
-        // Пузырьки
         function createBubbles() {
-            const bubblesContainer = document.getElementById('bubbles');
-            for (let i = 0; i < 35; i++) {
+            const container = document.getElementById('bubbles');
+            for (let i = 0; i < 30; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
-                const size = Math.random() * 18 + 8;
+                const size = Math.random() * 16 + 6;
                 bubble.style.width = `${size}px`;
                 bubble.style.height = `${size}px`;
                 bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 6 + 7}s`;
+                bubble.style.animationDuration = `${Math.random() * 7 + 8}s`;
                 bubble.style.animationDelay = `-${Math.random() * 15}s`;
-                bubblesContainer.appendChild(bubble);
+                container.appendChild(bubble);
             }
-        }
-
-        // Анимация заголовка
-        function restartTitleAnimation() {
-            const title = document.getElementById('main-title');
-            title.style.animation = 'none';
-            void title.offsetWidth;
-            title.style.animation = 'titleReveal 2.6s ease forwards';
         }
 
         function openOrderForm(service) {
@@ -288,18 +270,22 @@
 
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const success = document.getElementById('successMessage');
-            success.textContent = '✅ Заявка успешно отправлена! Мы свяжемся с вами скоро.';
+            const msg = document.getElementById('successMessage');
+            msg.textContent = '✅ Заявка отправлена! Скоро свяжемся с вами.';
             setTimeout(() => {
                 this.reset();
                 document.getElementById('service').value = '';
-                success.textContent = '';
+                msg.textContent = '';
             }, 5000);
         });
 
         window.onload = () => {
             createBubbles();
-            restartTitleAnimation();
+            // Перезапуск анимации заголовка
+            const title = document.getElementById('main-title');
+            title.style.animation = 'none';
+            void title.offsetWidth;
+            title.style.animation = 'titleReveal 2.6s ease forwards';
         };
     </script>
 </body>
