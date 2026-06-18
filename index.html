@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тихая Заводь — Рыбалка</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --dark: #0a3d2b;
+            --green: #1a5f3f;
+            --light-green: #4a9c6e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: #e8d5b7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Плавающие пузырьки */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            animation: rise 8s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0.5); }
+            100% { transform: translateY(-100px) scale(1.2); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 61, 43, 0.95);
+            padding: 1.2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--light-green);
+            text-decoration: none;
+        }
+        
+        nav a {
+            color: #e8d5b7;
+            margin-left: 2.5rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        nav a:hover { color: var(--light-green); }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10,61,43,0.6), rgba(10,61,43,0.75)), 
+                        url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 5.2rem;
+            font-family: 'Playfair Display', serif;
+            color: white;
+            margin-bottom: 1rem;
+            animation: titleReveal 2.6s ease forwards;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes titleReveal {
+            0% { opacity: 0; transform: translateY(90px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.7rem;
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        section { padding: 110px 6%; position: relative; z-index: 2; }
+        h2 { 
+            font-size: 3.3rem; 
+            text-align: center; 
+            margin-bottom: 4rem; 
+            color: var(--light-green);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.08);
+            padding: 3rem 2rem;
+            border-radius: 28px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-18px);
+            background: rgba(255,255,255,0.14);
+        }
+
+        .card::after {
+            content: '🐟';
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.08;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .form-container {
+            max-width: 620px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.09);
+            padding: 3rem;
+            border-radius: 28px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #4a9c6e;
+            border-radius: 12px;
+            color: white;
+        }
+
+        button {
+            background: var(--light-green);
+            color: white;
+            padding: 16px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        footer {
+            background: #08291f;
+            padding: 4rem 6% 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Плавающие пузырьки -->
+    <div class="bubbles" id="bubbles"></div>
+
+    <header>
+        <a href="#" class="logo">Тихая Заводь</a>
+        <nav>
+            <a href="#about">О нас</a>
+            <a href="#services">Услуги</a>
+            <a href="#gallery">Галерея</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>
+            <h1 id="main-title">Рыбалка, о которой мечтают</h1>
+            <p>Уединённая база отдыха с богатым клёвом и настоящим единением с природой</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>Почему выбирают нас</h2>
+        <div class="grid">
+            <div class="card"><h3>10+ лет</h3><p>Опыт и проверенные рыбные места</p></div>
+            <div class="card"><h3>Комфорт</h3><p>Современные домики, баня, лодки</p></div>
+            <div class="card"><h3>Природа</h3><p>Тишина, чистый воздух и потрясающие виды</p></div>
+        </div>
+    </section>
+
+    <section id="services" style="background: #0f4a36;">
+        <h2>Наши услуги</h2>
+        <div class="grid">
+            <div class="card" onclick="openOrderForm('Платная рыбалка')">Платная рыбалка<br><small>от 1 500 ₽ / день</small></div>
+            <div class="card" onclick="openOrderForm('Аренда домиков')">Аренда домиков<br><small>от 3 000 ₽ / сутки</small></div>
+            <div class="card" onclick="openOrderForm('Туры с проводником')">Туры с проводником<br><small>Полный пакет</small></div>
+            <div class="card" onclick="openOrderForm('Аренда лодок')">Аренда лодок<br><small>от 2 000 ₽ / день</small></div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>Галерея</h2>
+        <div class="grid">
+            <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
+            <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
+            <img src="https://images.pexels.com/photos/19040476/pexels-photo-19040476.jpeg" style="width:100%; border-radius:20px;" alt="Рыбалка">
+        </div>
+    </section>
+
+    <section id="contact" style="background: #0f4a36;">
+        <h2>Оформить заявку</h2>
+        <div class="form-container">
+            <form id="bookingForm">
+                <input type="text" id="service" readonly placeholder="Выбранная услуга">
+                <input type="text" id="name" placeholder="Ваше имя" required>
+                <input type="tel" id="phone" placeholder="Телефон" required>
+                <input type="date" id="date">
+                <textarea id="message" rows="4" placeholder="Дополнительная информация..."></textarea>
+                
+                <button type="submit">Отправить заявку</button>
+                <div id="successMessage" class="success"></div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Тихая Заводь — Рыбалка в уединении</p>
+        <p style="margin-top: 10px; opacity: 0.7;">Сайт создан Берг Яннес</p>
+    </footer>
+
+    <script>
+        // Пузырьки
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            for (let i = 0; i < 35; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 18 + 8;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.animationDuration = `${Math.random() * 6 + 7}s`;
+                bubble.style.animationDelay = `-${Math.random() * 15}s`;
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+
+        // Анимация заголовка
+        function restartTitleAnimation() {
+            const title = document.getElementById('main-title');
+            title.style.animation = 'none';
+            void title.offsetWidth;
+            title.style.animation = 'titleReveal 2.6s ease forwards';
+        }
+
+        function openOrderForm(service) {
+            document.getElementById('service').value = service;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const success = document.getElementById('successMessage');
+            success.textContent = '✅ Заявка успешно отправлена! Мы свяжемся с вами скоро.';
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('service').value = '';
+                success.textContent = '';
+            }, 5000);
+        });
+
+        window.onload = () => {
+            createBubbles();
+            restartTitleAnimation();
+        };
+    </script>
+</body>
+</html>
