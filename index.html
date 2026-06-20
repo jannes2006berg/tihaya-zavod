@@ -360,14 +360,39 @@
         .service-card.selected .tag { background: #ffffff; color: var(--leaf); }
         .selected-services {
             min-height: 58px;
+            width: 100%;
             padding: 16px 18px;
             border: 1px dashed rgba(18,59,43,.28);
             border-radius: 18px;
             background: var(--sky);
             color: var(--muted);
+            font: inherit;
             font-weight: 800;
+            text-align: left;
+            cursor: pointer;
         }
         .selected-services strong { color: var(--pine); }
+        .service-picker {
+            display: none;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(18,59,43,.12);
+        }
+        .service-picker.active { display: grid; }
+        .service-picker label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            background: var(--sky);
+            color: var(--pine);
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .service-picker input { width: auto; accent-color: var(--leaf); }
         .price-table {
             margin-top: 22px;
             overflow: hidden;
@@ -394,7 +419,7 @@
             border-radius: 50%;
             background: var(--lime);
             color: var(--pine);
-            font-size: 1.15rem;
+            font-size: 1.35rem;
             font-weight: 900;
             cursor: pointer;
         }
@@ -625,10 +650,10 @@
                     <article class="card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
                 </div>
                 <div class="price-table" aria-label="Таблица цен">
-                    <div class="price-row" data-service="Платная рыбалка"><strong>Платная рыбалка</strong><b>от 1 500 ₽</b><span>Дневной доступ к водоёму и мосткам</span><button type="button" aria-label="Выбрать платную рыбалку">🐟</button></div>
-                    <div class="price-row" data-service="Аренда домика"><strong>Аренда домика</strong><b>от 3 000 ₽</b><span>Домик у берега для семьи или компании</span><button type="button" aria-label="Выбрать аренду домика">🐟</button></div>
-                    <div class="price-row" data-service="Тур с проводником"><strong>Тур с проводником</strong><b>от 5 500 ₽</b><span>Маршрут, лодка и точки клёва</span><button type="button" aria-label="Выбрать тур с проводником">🐟</button></div>
-                    <div class="price-row" data-service="Аренда лодки"><strong>Аренда лодки</strong><b>от 2 000 ₽</b><span>Лодка на день с жилетами и базовой подготовкой</span><button type="button" aria-label="Выбрать аренду лодки">🐟</button></div>
+                    <div class="price-row" data-service="Платная рыбалка"><strong>Платная рыбалка</strong><b>от 1 500 ₽</b><span>Дневной доступ к водоёму и мосткам</span><button type="button" aria-label="Выбрать платную рыбалку">+</button></div>
+                    <div class="price-row" data-service="Аренда домика"><strong>Аренда домика</strong><b>от 3 000 ₽</b><span>Домик у берега для семьи или компании</span><button type="button" aria-label="Выбрать аренду домика">+</button></div>
+                    <div class="price-row" data-service="Тур с проводником"><strong>Тур с проводником</strong><b>от 5 500 ₽</b><span>Маршрут, лодка и точки клёва</span><button type="button" aria-label="Выбрать тур с проводником">+</button></div>
+                    <div class="price-row" data-service="Аренда лодки"><strong>Аренда лодки</strong><b>от 2 000 ₽</b><span>Лодка на день с жилетами и базовой подготовкой</span><button type="button" aria-label="Выбрать аренду лодки">+</button></div>
                 </div>
             </section>
 
@@ -664,19 +689,18 @@
                         <p>Напишите желаемую дату и формат отдыха — мы подберём домик, лодку и удобное время приезда.</p>
                     </aside>
                     <form id="bookingForm">
-                        <div class="selected-services" id="selectedServices">Выберите один или несколько форматов в блоке выше.</div>
+                        <button class="selected-services" id="selectedServices" type="button" aria-expanded="false" aria-controls="servicePicker">Выберите один или несколько форматов</button>
+                        <div class="service-picker" id="servicePicker">
+                            <label><input type="checkbox" value="Платная рыбалка"> Платная рыбалка</label>
+                            <label><input type="checkbox" value="Аренда домика"> Аренда домика</label>
+                            <label><input type="checkbox" value="Тур с проводником"> Тур с проводником</label>
+                            <label><input type="checkbox" value="Аренда лодки"> Аренда лодки</label>
+                        </div>
                         <input type="hidden" id="service" name="formats">
                         <input type="text" placeholder="Ваше имя" required>
                         <input type="tel" placeholder="Телефон" required>
                         <input type="date" aria-label="Дата приезда">
-                        <select id="readyOption" aria-label="Готовый вариант отдыха">
-                            <option value="">Выберите готовый вариант, чтобы не писать вручную</option>
-                            <option value="1 человек, рыбалка на день, свои снасти">1 человек — рыбалка на день</option>
-                            <option value="2–3 человека, нужна лодка и базовые снасти">2–3 человека — лодка и снасти</option>
-                            <option value="Семья, домик у берега, мангал и вечерняя баня">Семья — домик, мангал и баня</option>
-                            <option value="Компания 4–6 человек, домик, лодка, баня и тур с проводником">Компания — полный отдых с проводником</option>
-                        </select>
-                        <textarea id="message" placeholder="Или напишите свой вариант: сколько человек, нужны ли домик, лодка, баня или снасти"></textarea>
+                        <textarea id="message" placeholder="Дополнительные пожелания: сколько человек, нужна ли баня, снасти или мангал"></textarea>
                         <button class="btn btn-primary" type="submit">Отправить заявку</button>
                         <div class="form-message" id="formMessage"></div>
                     </form>
@@ -771,6 +795,7 @@
 
         const selectedFormats = new Set();
         const selectedServices = document.getElementById('selectedServices');
+        const servicePicker = document.getElementById('servicePicker');
         const serviceInput = document.getElementById('service');
         const modal = document.getElementById('serviceModal');
         const modalTitle = document.getElementById('modalTitle');
@@ -783,7 +808,7 @@
             serviceInput.value = formats.join(', ');
             selectedServices.innerHTML = formats.length
                 ? `<strong>Выбрано:</strong> ${formats.join(', ')}`
-                : 'Выберите один или несколько форматов в блоке выше.';
+                : 'Выберите один или несколько форматов';
         }
 
         function openServiceModal(serviceName) {
@@ -804,6 +829,9 @@
             document.querySelectorAll('[data-service]').forEach((element) => {
                 element.classList.toggle('selected', selectedFormats.has(element.dataset.service));
             });
+            servicePicker.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+                checkbox.checked = selectedFormats.has(checkbox.value);
+            });
         }
 
         function toggleService(serviceName) {
@@ -821,17 +849,29 @@
             element.addEventListener('click', () => toggleService(element.dataset.service));
         });
 
+        selectedServices.addEventListener('click', () => {
+            const isOpen = servicePicker.classList.toggle('active');
+            selectedServices.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        servicePicker.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedFormats.add(checkbox.value);
+                } else {
+                    selectedFormats.delete(checkbox.value);
+                }
+                updateSelectedServices();
+                syncSelectedUI();
+            });
+        });
+
         modalClose.addEventListener('click', closeServiceModal);
         modal.addEventListener('click', (event) => {
             if (event.target === modal) closeServiceModal();
         });
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') closeServiceModal();
-        });
-
-        document.getElementById('readyOption').addEventListener('change', (event) => {
-            const messageField = document.getElementById('message');
-            if (event.target.value) messageField.value = event.target.value;
         });
 
         document.getElementById('bookingForm').addEventListener('submit', (event) => {
