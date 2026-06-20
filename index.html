@@ -3,399 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тихая Заводь — Рыбалка</title>
+    <title>Тихая Заводь — рыбалка и отдых у воды</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-      
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+
         :root {
-            --dark: #0a3d2b;
-            --light-green: #4a9c6e;
+            --ink: #10251e;
+            --pine: #123b2b;
+            --leaf: #2f7d4c;
+            --moss: #8fbb61;
+            --lime: #d6ef75;
+            --sand: #f6ecd7;
+            --paper: #fbf8ee;
+            --water: #dcefe8;
+            --sky: #eef8f2;
+            --muted: #6e7f75;
+            --radius-lg: 42px;
+            --radius-md: 28px;
+            --shadow: 0 24px 70px rgba(16, 37, 30, .14);
         }
-      
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-      
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--dark);
-            color: #e8d5b7;
-            line-height: 1.6;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 82% 8%, rgba(214, 239, 117, .55), transparent 24%),
+                radial-gradient(circle at 10% 24%, rgba(220, 239, 232, .9), transparent 32%),
+                linear-gradient(180deg, var(--sky) 0%, var(--paper) 46%, #edf6e9 100%);
             overflow-x: hidden;
+            line-height: 1.55;
         }
-        
-        /* Плавающие рыбки по фону */
-        .fish {
-            position: absolute;
-            font-size: 2.8rem;
-            opacity: 0.18;
-            z-index: 1;
-            animation: swim 32s linear infinite;
-            user-select: none;
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+            outline: 3px solid var(--lime);
+            outline-offset: 3px;
+        }
+
+        .page-shell {
+            width: min(1220px, calc(100% - 36px));
+            margin: 0 auto;
+        }
+
+        .soft-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
             pointer-events: none;
+            opacity: .42;
+            background-image:
+                linear-gradient(rgba(18,59,43,.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18,59,43,.07) 1px, transparent 1px);
+            background-size: 82px 82px;
+            mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+        }
+
+        .fish {
+            position: fixed;
+            left: -90px;
+            z-index: 1;
+            font-size: 2rem;
+            opacity: .2;
+            pointer-events: none;
+            animation: swim 34s linear infinite;
         }
         @keyframes swim {
-            0% { transform: translateX(-150px) rotate(-12deg); }
-            100% { transform: translateX(110vw) rotate(18deg); }
-        }
-        
-        .bubbles { 
-            position: fixed; top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            pointer-events: none; z-index: 2; 
-            overflow: hidden; 
-        }
-        .bubble {
-            position: absolute;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50%;
-            animation: rise 10s linear infinite;
-        }
-        @keyframes rise { 
-            0% { transform: translateY(100vh); } 
-            100% { transform: translateY(-100px); } 
+            from { transform: translateX(-120px) rotate(-7deg); }
+            to { transform: translateX(calc(100vw + 220px)) rotate(8deg); }
         }
 
         header {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(10, 61, 43, 0.97);
-            padding: 1.2rem 5%;
+            position: sticky;
+            top: 16px;
+            z-index: 30;
+            margin-top: 16px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 12px 12px 12px 18px;
+            border: 1px solid rgba(18,59,43,.12);
+            border-radius: 999px;
+            background: rgba(251,248,238,.82);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 16px 42px rgba(16,37,30,.09);
         }
-        .logo { font-size: 2.2rem; font-weight: bold; color: var(--light-green); }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -.02em; }
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--lime);
+            box-shadow: inset 0 -8px 16px rgba(18,59,43,.11);
+        }
+        nav { display: flex; align-items: center; gap: 6px; }
+        nav a { padding: 12px 14px; border-radius: 999px; color: var(--muted); font-weight: 700; }
+        nav a:hover { background: var(--water); color: var(--pine); }
+        .header-cta { padding: 14px 20px; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 900; }
 
         .hero {
-            height: 100vh;
-            min-height: 580px;
-            background: linear-gradient(rgba(10,61,43,0.75), rgba(10,61,43,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
-            display: flex;
+            position: relative;
+            z-index: 5;
+            min-height: calc(100vh - 76px);
+            padding: 58px 0 70px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+            gap: 40px;
+            align-items: center;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--leaf);
+            box-shadow: 0 12px 30px rgba(16,37,30,.08);
+            font-weight: 900;
+            margin-bottom: 22px;
+        }
+        h1, h2 { font-family: 'Playfair Display', serif; }
+        h1 {
+            font-size: clamp(3.7rem, 8.4vw, 7.8rem);
+            line-height: .84;
+            letter-spacing: -.065em;
+            max-width: 780px;
+            color: var(--ink);
+            text-wrap: balance;
+        }
+        .accent-word {
+            display: inline-block;
+            padding: 0 .1em .08em;
+            border-radius: .22em;
+            background: var(--lime);
+            color: var(--pine);
+        }
+        .hero p {
+            max-width: 610px;
+            margin: 28px 0 32px;
+            color: var(--muted);
+            font-size: clamp(1.05rem, 2vw, 1.28rem);
+            font-weight: 600;
+        }
+        .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+        .btn {
+            display: inline-flex;
+            min-height: 56px;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-        }
-        .hero h1 {
-            font-size: 3.7rem;
-            font-family: 'Playfair Display', serif;
-            color: white;
-            line-height: 1.05;
-        }
-        .split-char {
-            display: inline-block;
-            opacity: 0;
-            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        section { padding: 90px 5%; position: relative; z-index: 3; }
-        h2 { font-size: 2.8rem; text-align: center; margin-bottom: 3rem; color: var(--light-green); }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        /* ========== РАСКРЫВАЮЩИЕСЯ КАРТОЧКИ ========== */
-        .expandable-card {
-            background: rgba(255,255,255,0.08);
-            border-radius: 24px;
-            overflow: hidden;
+            gap: 10px;
+            padding: 0 24px;
+            border: 0;
+            border-radius: 999px;
+            font: inherit;
+            font-weight: 900;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: transform .25s, box-shadow .25s, background .25s;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+        .btn-primary { background: var(--ink); color: var(--paper); }
+        .btn-secondary { background: #ffffff; color: var(--pine); box-shadow: 0 12px 30px rgba(16,37,30,.07); }
+
+        .hero-visual {
             position: relative;
-        }
-        .expandable-card:hover {
-            transform: translateY(-8px);
-            background: rgba(74, 156, 110, 0.22);
-        }
-        .card-header {
-            padding: 2.2rem 1.8rem;
-            text-align: center;
-        }
-        .card-header h3 {
-            font-size: 1.8rem;
-            color: var(--light-green);
-            margin-bottom: 8px;
-        }
-        .card-content {
-            max-height: 0;
-            padding: 0 1.8rem;
+            min-height: 610px;
+            border-radius: 54px;
+            padding: 18px;
+            background: linear-gradient(145deg, #ffffff, var(--water));
+            box-shadow: var(--shadow);
             overflow: hidden;
-            opacity: 0;
-            transition: all 0.5s ease;
-            background: rgba(255,255,255,0.06);
         }
-        .expandable-card.active .card-content {
-            max-height: 680px;
-            opacity: 1;
-            padding: 1.8rem 1.8rem 2.2rem;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 1.2rem;
-        }
-
-        /* Зелёные минималистичные рыбки */
-        .card-fish {
+        .hero-visual::before {
+            content: '';
             position: absolute;
-            font-size: 1.7rem;
-            color: var(--light-green);
-            opacity: 0.32;
+            inset: 12% -10% auto auto;
+            width: 78%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--lime);
+            opacity: .8;
+        }
+        .hero-photo {
+            position: relative;
+            height: 100%;
+            min-height: 574px;
+            border-radius: 42px;
+            background:
+                linear-gradient(180deg, rgba(16,37,30,.05), rgba(16,37,30,.55)),
+                url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=85') center/cover;
+            overflow: hidden;
+        }
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: auto 0 0;
+            height: 42%;
+            background: linear-gradient(transparent, rgba(16,37,30,.72));
+        }
+        .stat-card, .mini-card {
+            position: absolute;
+            z-index: 3;
+            border-radius: 26px;
+            background: rgba(255,255,255,.88);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 18px 44px rgba(16,37,30,.13);
+            border: 1px solid rgba(255,255,255,.7);
+        }
+        .stat-card { left: 0; bottom: 46px; padding: 20px 22px; transform: translateX(-22px); }
+        .stat-card strong { display: block; font-size: 2.35rem; line-height: 1; color: var(--leaf); }
+        .mini-card { right: 34px; top: 34px; max-width: 230px; padding: 18px; }
+        .mini-card strong { color: var(--pine); }
+        .mini-card p, .stat-card span { color: var(--muted); font-weight: 700; }
+
+        .section {
+            position: relative;
+            z-index: 5;
+            padding: 78px 0;
+        }
+        .section-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
+            align-items: end;
+            gap: 32px;
+            margin-bottom: 34px;
+        }
+        h2 {
+            color: var(--ink);
+            font-size: clamp(2.35rem, 5vw, 5rem);
+            line-height: .92;
+            letter-spacing: -.05em;
+            text-wrap: balance;
+        }
+        .section-head p { color: var(--muted); font-weight: 700; font-size: 1.05rem; }
+
+        .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .card {
+            position: relative;
+            min-height: 250px;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            background: #ffffff;
+            border: 1px solid rgba(18,59,43,.08);
+            box-shadow: 0 16px 44px rgba(16,37,30,.08);
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+        .card::after {
+            content: '';
+            position: absolute;
+            right: -44px;
+            bottom: -54px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--lime);
+            opacity: .36;
+        }
+        .card-icon { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 18px; background: var(--water); font-size: 1.8rem; margin-bottom: 28px; }
+        .card h3 { color: var(--pine); font-size: 1.38rem; margin-bottom: 10px; }
+        .card p { color: var(--muted); font-weight: 600; }
+        .about-card { cursor: pointer; padding-bottom: 82px; }
+        .about-card::before {
+            content: '+';
+            position: absolute;
+            left: 24px;
+            bottom: 24px;
             z-index: 2;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--paper);
+            font-size: 1.45rem;
+            font-weight: 900;
+        }
+        .about-details {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: .95fr 1.05fr;
+            gap: 24px;
+            align-items: stretch;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            transition: max-height .55s ease, opacity .35s ease, padding .35s ease, margin .35s ease;
+        }
+        .about-details.active {
+            max-height: 760px;
+            opacity: 1;
+            padding: 18px;
+            margin-top: 6px;
+        }
+        .about-media {
+            display: grid;
+            gap: 12px;
+        }
+        .about-media img {
+            width: 100%;
+            height: 100%;
+            min-height: 174px;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+        .about-media img:first-child { min-height: 360px; }
+        .about-details-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(20px, 4vw, 38px);
+        }
+        .about-details-content h3 { color: var(--pine); font-size: clamp(1.7rem, 3vw, 2.7rem); margin-bottom: 16px; }
+        .about-details-content p { color: var(--muted); font-weight: 700; margin-bottom: 14px; }
+        .about-details-content ul { display: grid; gap: 10px; padding-left: 20px; color: var(--ink); font-weight: 800; }
+        .price { position: absolute; left: 24px; bottom: 24px; color: var(--leaf); font-size: 1.55rem; font-weight: 900; }
+        .tag { position: absolute; right: 18px; top: 18px; z-index: 2; padding: 8px 12px; border-radius: 999px; background: var(--lime); color: var(--pine); font-size: .8rem; font-weight: 900; }
+
+        .dark-band {
+            margin: 20px 0;
+            padding: 54px;
+            border-radius: 54px;
+            background: var(--ink);
+            color: var(--paper);
+            box-shadow: var(--shadow);
+        }
+        .dark-band h2 { color: var(--paper); }
+        .dark-band .section-head p { color: rgba(251,248,238,.7); }
+        .service-card { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.12); color: var(--paper); cursor: pointer; }
+        .service-card::after { background: var(--moss); opacity: .28; }
+        .service-card h3 { color: var(--lime); }
+        .service-card p { color: rgba(251,248,238,.72); }
+        .service-card .price { color: var(--paper); }
+        .service-plus {
+            position: absolute;
+            right: 18px;
+            bottom: 18px;
+            z-index: 3;
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--pine);
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+        .service-card.selected {
+            outline: 3px solid var(--lime);
+            background: rgba(214,239,117,.16);
+        }
+        .service-card.selected .tag { background: #ffffff; color: var(--leaf); }
+        .selected-services {
+            min-height: 58px;
+            width: 100%;
+            padding: 16px 18px;
+            border: 1px dashed rgba(18,59,43,.28);
+            border-radius: 18px;
+            background: var(--sky);
+            color: var(--muted);
+            font: inherit;
+            font-weight: 800;
+            text-align: left;
+            cursor: pointer;
+        }
+        .selected-services strong { color: var(--pine); }
+        .service-picker {
+            display: none;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(18,59,43,.12);
+        }
+        .service-picker.active { display: grid; }
+        .service-picker label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            background: var(--sky);
+            color: var(--pine);
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .service-picker input { width: auto; accent-color: var(--leaf); }
+        .price-table {
+            margin-top: 22px;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.07);
+        }
+        .price-row {
+            display: grid;
+            grid-template-columns: 1.2fr .7fr 1fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 18px;
+            color: var(--paper);
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+        .price-row:last-child { border-bottom: 0; }
+        .price-row strong { color: var(--lime); }
+        .price-row span { color: rgba(251,248,238,.7); font-weight: 700; }
+        .price-row button {
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--pine);
+            font-size: 1.35rem;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        .price-row.selected { background: rgba(214,239,117,.14); }
+        .price-row.selected button { background: #ffffff; color: var(--leaf); }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+            background: rgba(16,37,30,.58);
+            opacity: 0;
             pointer-events: none;
-            animation: cardSwim 26s linear infinite;
+            transition: opacity .25s ease;
         }
-        @keyframes cardSwim {
-            0% { transform: translateX(-45px) rotate(-10deg); }
-            100% { transform: translateX(360px) rotate(10deg); }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-card {
+            width: min(560px, 100%);
+            padding: 26px;
+            border-radius: 34px;
+            background: #ffffff;
+            box-shadow: 0 28px 90px rgba(16,37,30,.28);
+            transform: translateY(18px) scale(.98);
+            transition: transform .25s ease;
+        }
+        .modal.active .modal-card { transform: translateY(0) scale(1); }
+        .modal-card h3 { color: var(--pine); font-size: clamp(1.7rem, 3vw, 2.4rem); margin-bottom: 12px; }
+        .modal-card p { color: var(--muted); font-weight: 700; margin-bottom: 14px; }
+        .modal-card ul { display: grid; gap: 9px; padding-left: 20px; color: var(--ink); font-weight: 800; }
+        .modal-actions { display: flex; justify-content: flex-end; margin-top: 22px; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: 1.16fr .84fr;
+            gap: 18px;
+        }
+        .gallery-main, .gallery-side {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .gallery-main img { width: 100%; height: 560px; object-fit: cover; }
+        .gallery-side { display: grid; gap: 18px; box-shadow: none; }
+        .gallery-side img { width: 100%; height: 271px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+
+        .booking-panel {
+            display: grid;
+            grid-template-columns: .85fr 1.15fr;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 54px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+        }
+        .booking-side {
+            padding: 34px;
+            border-radius: 42px;
+            background:
+                linear-gradient(rgba(16,37,30,.22), rgba(16,37,30,.7)),
+                url('https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85') center/cover;
+            color: var(--paper);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+        .booking-side h2 { color: var(--paper); font-size: clamp(2.1rem, 4vw, 3.8rem); }
+        .booking-side p { margin-top: 18px; color: rgba(251,248,238,.78); font-weight: 700; }
+        .map-panel {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 54px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+        }
+        .map-info {
+            padding: 34px;
+            border-radius: 42px;
+            background: var(--ink);
+            color: var(--paper);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .map-info h2 { color: var(--paper); font-size: clamp(2.1rem, 4vw, 3.8rem); }
+        .map-info p { margin-top: 18px; color: rgba(251,248,238,.75); font-weight: 700; }
+        .address-card { margin-top: 24px; padding: 18px; border-radius: 24px; background: rgba(255,255,255,.1); font-weight: 900; }
+        .map-frame {
+            min-height: 430px;
+            width: 100%;
+            border: 0;
+            border-radius: 42px;
+            filter: saturate(.92) contrast(1.02);
+        }
+        form { display: grid; align-content: center; gap: 12px; padding: 22px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 17px 18px;
+            border: 1px solid rgba(18,59,43,.12);
+            border-radius: 18px;
+            background: var(--sky);
+            color: var(--ink);
+            font: inherit;
+            font-weight: 600;
+        }
+        textarea { min-height: 118px; resize: vertical; }
+        input, textarea, select, button { -webkit-tap-highlight-color: transparent; }
+        .form-message { min-height: 24px; color: var(--leaf); font-weight: 900; text-align: center; }
+
+        .to-top {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 40;
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--paper);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity .25s, transform .25s;
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+        .to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        footer { position: relative; z-index: 5; padding: 34px 18px 48px; color: var(--muted); text-align: center; font-weight: 700; }
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 940px) {
+            header { border-radius: 28px; align-items: flex-start; }
+            nav { display: none; }
+            .hero, .section-head, .booking-panel, .gallery, .about-details, .map-panel { grid-template-columns: 1fr; }
+            .hero { padding-top: 46px; }
+            .hero-visual { min-height: 460px; }
+            .hero-photo { min-height: 424px; }
+            .stat-card { left: 18px; transform: none; }
+            .cards { grid-template-columns: 1fr; }
+            .price-row { grid-template-columns: 1fr auto; }
+            .price-row span { grid-column: 1 / -1; }
+            .dark-band { padding: 28px; border-radius: 34px; }
+            .gallery-main img, .gallery-side img { height: 310px; }
+            .booking-panel, .map-panel { border-radius: 34px; }
+            .about-details.active { max-height: 1400px; }
+            .about-media img, .map-frame { min-height: 300px; }
         }
 
-        /* ========== КРАСИВЫЕ КАРТОЧКИ УСЛУГ ========== */
-        .service-card {
-            background: rgba(255,255,255,0.08);
-            padding: 2.8rem 1.5rem;
-            border-radius: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-        .service-card:hover {
-            transform: translateY(-15px);
-            background: rgba(74, 156, 110, 0.3);
+        @media (max-width: 520px) {
+            .page-shell { width: min(100% - 22px, 1220px); }
+            header { top: 10px; padding: 10px; }
+            .logo span:last-child { display: none; }
+            .header-cta { padding: 12px 14px; }
+            h1 { font-size: clamp(3rem, 18vw, 4.3rem); }
+            .hero-visual { border-radius: 34px; padding: 12px; }
+            .hero-photo { border-radius: 26px; }
+            .stat-card, .mini-card { position: relative; inset: auto; transform: none; margin: 12px; }
+            .booking-panel, .map-panel { padding: 12px; }
+            form { padding: 10px; }
+            .to-top { width: 48px; height: 48px; right: 14px; bottom: 14px; }
         }
 
-        /* ========== КРАСИВАЯ ФОРМА ========== */
-        .form-container {
-            max-width: 580px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.09);
-            padding: 2.8rem;
-            border-radius: 24px;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 14px 16px;
-            margin: 10px 0;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #4a9c6e;
-            border-radius: 12px;
-            color: #e8d5b7;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-        }
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #6ed99a;
-            background: rgba(255,255,255,0.15);
-        }
-        button {
-            background: var(--light-green);
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 50px;
-            width: 100%;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-        button:hover {
-            background: #5ec18a;
-            transform: translateY(-2px);
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bubbles" id="bubbles"></div>
-    
-    <!-- Фоновые рыбки -->
-    <div class="fish" style="top: 15%; animation-delay: 0s;">🐟</div>
-    <div class="fish" style="top: 38%; animation-delay: 6s; font-size: 2.4rem;">🐠</div>
-    <div class="fish" style="top: 72%; animation-delay: 13s;">🐟</div>
-    <div class="fish" style="top: 28%; animation-delay: 19s; font-size: 2.1rem;">🐠</div>
-    <div class="fish" style="top: 55%; animation-delay: 25s;">🐟</div>
+    <div class="soft-grid" aria-hidden="true"></div>
+    <div class="fish" style="top: 20%; animation-delay: -4s;">🐟</div>
+    <div class="fish" style="top: 58%; animation-delay: -17s; font-size: 1.7rem;">🐠</div>
+    <a class="to-top" id="toTop" href="#top" aria-label="Наверх">↑</a>
+    <div class="modal" id="serviceModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h3 id="modalTitle"></h3>
+            <p id="modalText"></p>
+            <ul id="modalList"></ul>
+            <div class="modal-actions"><button class="btn btn-primary" id="modalClose" type="button">Понятно</button></div>
+        </div>
+    </div>
 
-    <header>
-        <a href="#" class="logo">Тихая Заводь</a>
-    </header>
-    
-    <section class="hero">
-        <div>
-            <h1 id="main-title">Рыбалка,<br>о которой мечтают</h1>
-            <p>Уединённая база отдыха с богатым клёвом</p>
-        </div>
-    </section>
-    
-    <section id="about">
-        <h2>Почему выбирают нас</h2>
-        <div class="grid">
-            <div class="expandable-card">
-                <div class="card-header">
-                    <h3>10+ лет</h3>
-                    <p>Опыт и проверенные места</p>
+    <div class="page-shell">
+        <header>
+            <a class="logo" href="#top" aria-label="Тихая Заводь">
+                <span class="logo-mark">🎣</span>
+                <span>Тихая Заводь</span>
+            </a>
+            <nav aria-label="Основная навигация">
+                <a href="#about">О базе</a>
+                <a href="#services">Услуги</a>
+                <a href="#gallery">Галерея</a>
+                <a href="#map">Карта</a>
+                <a href="#booking">Заявка</a>
+            </nav>
+            <a class="header-cta" href="#booking">Забронировать</a>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy reveal">
+                    <span class="eyebrow">рыбалка · домики · баня у воды</span>
+                    <h1>Тихий отдых и <span class="accent-word">честный клёв</span></h1>
+                    <p>Лёгкий светлый дизайн в духе современных eco-landing страниц, но с атмосферой рыбацкой базы: озеро, лодки, снасти и уютные вечера у костра.</p>
+                    <div class="actions">
+                        <a class="btn btn-primary" href="#services">Выбрать формат</a>
+                        <a class="btn btn-secondary" href="#gallery">Смотреть локацию</a>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" class="card-image" alt="Опыт" loading="lazy">
-                    <p>За более чем 10 лет мы изучили все лучшие места на водоёме. Наши гости всегда возвращаются с хорошим уловом.</p>
+
+                <div class="hero-visual reveal" aria-label="Озеро и рыбалка">
+                    <div class="hero-photo"></div>
+                    <div class="mini-card"><strong>Готовый отдых за день</strong><p>Домик, лодка, снасти и маршрут к точкам клёва.</p></div>
+                    <div class="stat-card"><strong>10+</strong><span>лет знаем водоём</span></div>
                 </div>
-                <div class="card-fish" style="top: 42%; left: -30px; animation-delay: 0s;">🐟</div>
-            </div>
-            
-            <div class="expandable-card">
-                <div class="card-header">
-                    <h3>Комфорт</h3>
-                    <p>Современные домики, баня, лодки</p>
+            </section>
+
+            <section class="section reveal" id="about">
+                <div class="section-head">
+                    <h2>База для тех, кто любит воду и тишину</h2>
+                    <p>Светлые блоки, большие скругления и зелёные акценты делают сайт современным, а контент остаётся полностью про рыбалку.</p>
                 </div>
-                <div class="card-content">
-                    <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" class="card-image" alt="Комфорт" loading="lazy">
-                    <p>Уютные домики со всеми удобствами, русская баня на берегу, новые лодки с моторами.</p>
+                <div class="cards">
+                    <article class="card about-card" data-detail="boats"><div class="card-icon">🛶</div><h3>Лодки и снасти</h3><p>Подготовленные лодки, базовый комплект снастей и подсказки по лучшим местам на водоёме.</p></article>
+                    <article class="card about-card" data-detail="houses"><div class="card-icon">🏡</div><h3>Домики у берега</h3><p>Тёплые домики с удобствами, мангальной зоной и видом на воду прямо с террасы.</p></article>
+                    <article class="card about-card" data-detail="fire"><div class="card-icon">🔥</div><h3>Баня и костёр</h3><p>После рыбалки можно отдохнуть в бане, приготовить улов и провести вечер у огня.</p></article>
+                    <div class="about-details" id="aboutDetails" aria-live="polite"></div>
                 </div>
-                <div class="card-fish" style="top: 52%; left: -35px; font-size: 2.05rem; animation-delay: 7s;">🐠</div>
-            </div>
-            
-            <div class="expandable-card">
-                <div class="card-header">
-                    <h3>Природа</h3>
-                    <p>Тишина и чистый воздух</p>
+            </section>
+
+            <section class="section dark-band reveal" id="services">
+                <div class="section-head">
+                    <h2>Форматы отдыха</h2>
+                    <p>Кликайте на карточки — можно выбрать сразу несколько форматов, а подробности откроются во всплывающем окне.</p>
                 </div>
-                <div class="card-content">
-                    <img src="https://picsum.photos/id/1015/800/600" class="card-image" alt="Природа" loading="lazy">
-                    <p>Уединённая территория вдали от шумных мест. Чистейший воздух и потрясающие виды.</p>
+                <div class="cards">
+                    <article class="card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
+                    <article class="card service-card" data-service="Аренда домика"><h3>Аренда домика</h3><p>Комфортное размещение для семьи или компании на сутки и больше.</p><span class="price">от 3 000 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
+                    <article class="card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
                 </div>
-                <div class="card-fish" style="top: 38%; left: -25px; animation-delay: 13s;">🐟</div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- ========== КРАСИВЫЕ КАРТОЧКИ УСЛУГ ========== -->
-    <section id="services" style="background: #0f4a36;">
-        <h2>Наши услуги</h2>
-        <div class="grid">
-            <div class="service-card" onclick="selectService('Платная рыбалка')">
-                <h3>Платная рыбалка</h3>
-                <p>от 1 500 ₽ / день</p>
-            </div>
-            <div class="service-card" onclick="selectService('Аренда домиков')">
-                <h3>Аренда домиков</h3>
-                <p>от 3 000 ₽ / сутки</p>
-            </div>
-            <div class="service-card" onclick="selectService('Туры с проводником')">
-                <h3>Туры с проводником</h3>
-                <p>Полный пакет</p>
-            </div>
-            <div class="service-card" onclick="selectService('Аренда лодок')">
-                <h3>Аренда лодок</h3>
-                <p>от 2 000 ₽ / день</p>
-            </div>
-        </div>
-    </section>
-    
-    <section id="gallery">
-        <h2>Галерея</h2>
-        <div class="grid">
-            <img src="https://images.pexels.com/photos/10583788/pexels-photo-10583788.jpeg" style="width:100%; border-radius:20px;" alt="">
-            <img src="https://images.pexels.com/photos/19040471/pexels-photo-19040471.jpeg" style="width:100%; border-radius:20px;" alt="">
-        </div>
-    </section>
-    
-    <!-- ========== КРАСИВАЯ ФОРМА ========== -->
-    <section id="contact" style="background: #0f4a36;">
-        <h2>Оформить заявку</h2>
-        <div class="form-container">
-            <form id="bookingForm">
-                <select id="service" required>
-                    <option value="">Выберите услугу</option>
-                    <option value="Платная рыбалка">Платная рыбалка — от 1 500 ₽ / день</option>
-                    <option value="Аренда домиков">Аренда домиков — от 3 000 ₽ / сутки</option>
-                    <option value="Туры с проводником">Туры с проводником — Полный пакет</option>
-                    <option value="Аренда лодок">Аренда лодок — от 2 000 ₽ / день</option>
-                </select>
-                <input type="text" id="name" placeholder="Ваше имя" required>
-                <input type="tel" id="phone" placeholder="Телефон" required>
-                <input type="date" id="date">
-                <textarea id="message" rows="4" placeholder="Дополнительная информация..."></textarea>
-                <button type="submit">Отправить заявку</button>
-                <div id="successMessage" style="color:#4a9c6e; text-align:center; margin-top:15px; font-weight:bold;"></div>
-            </form>
-        </div>
-    </section>
-    
+                <div class="price-table" aria-label="Таблица цен">
+                    <div class="price-row" data-service="Платная рыбалка"><strong>Платная рыбалка</strong><b>от 1 500 ₽</b><span>Дневной доступ к водоёму и мосткам</span><button type="button" aria-label="Выбрать платную рыбалку">+</button></div>
+                    <div class="price-row" data-service="Аренда домика"><strong>Аренда домика</strong><b>от 3 000 ₽</b><span>Домик у берега для семьи или компании</span><button type="button" aria-label="Выбрать аренду домика">+</button></div>
+                    <div class="price-row" data-service="Тур с проводником"><strong>Тур с проводником</strong><b>от 5 500 ₽</b><span>Маршрут, лодка и точки клёва</span><button type="button" aria-label="Выбрать тур с проводником">+</button></div>
+                    <div class="price-row" data-service="Аренда лодки"><strong>Аренда лодки</strong><b>от 2 000 ₽</b><span>Лодка на день с жилетами и базовой подготовкой</span><button type="button" aria-label="Выбрать аренду лодки">+</button></div>
+                </div>
+            </section>
+
+            <section class="section reveal" id="gallery">
+                <div class="section-head">
+                    <h2>Место, которое легко представить в портфолио</h2>
+                    <p>Большая фото-сетка с природой и водой помогает лендингу выглядеть как готовый коммерческий проект.</p>
+                </div>
+                <div class="gallery">
+                    <div class="gallery-main"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=85" alt="Лесное озеро" loading="lazy"></div>
+                    <div class="gallery-side">
+                        <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?auto=format&fit=crop&w=900&q=85" alt="Рыбак у воды" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85" alt="Лодка на озере" loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section reveal" id="map">
+                <div class="map-panel">
+                    <div class="map-info">
+                        <h2>Как нас найти</h2>
+                        <p>Для портфолио указал подходящую локацию у воды: рядом с Валдайским озером, где атмосфера хорошо подходит для базы рыбалки и отдыха.</p>
+                        <div class="address-card">Новгородская область, Валдай, ул. Лесная, 12</div>
+                    </div>
+                    <iframe class="map-frame" title="Карта: Тихая Заводь" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=33.225%2C57.955%2C33.335%2C58.015&amp;layer=mapnik&amp;marker=57.9828%2C33.2524"></iframe>
+                </div>
+            </section>
+
+            <section class="section reveal" id="booking">
+                <div class="booking-panel">
+                    <aside class="booking-side">
+                        <h2>Оставить заявку</h2>
+                        <p>Напишите желаемую дату и формат отдыха — мы подберём домик, лодку и удобное время приезда.</p>
+                    </aside>
+                    <form id="bookingForm">
+                        <button class="selected-services" id="selectedServices" type="button" aria-expanded="false" aria-controls="servicePicker">Выберите один или несколько форматов</button>
+                        <div class="service-picker" id="servicePicker">
+                            <label><input type="checkbox" value="Платная рыбалка"> Платная рыбалка</label>
+                            <label><input type="checkbox" value="Аренда домика"> Аренда домика</label>
+                            <label><input type="checkbox" value="Тур с проводником"> Тур с проводником</label>
+                            <label><input type="checkbox" value="Аренда лодки"> Аренда лодки</label>
+                        </div>
+                        <input type="hidden" id="service" name="formats">
+                        <input type="text" name="name" placeholder="Ваше имя" autocomplete="name" required>
+                        <input type="tel" name="phone" placeholder="Телефон" autocomplete="tel" required>
+                        <input type="date" name="arrival_date" aria-label="Дата приезда">
+                        <textarea id="message" name="message" placeholder="Дополнительные пожелания: сколько человек, нужна ли баня, снасти или мангал"></textarea>
+                        <button class="btn btn-primary" type="submit">Отправить заявку</button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <footer>
-        <p>&copy; 2026 Тихая Заводь — Рыбалка в уединении</p>
-        <p style="margin-top:8px; opacity:0.7;">Сайт создан Берг Яннес</p>
+        <p>© 2026 Тихая Заводь — рыбалка и отдых у воды</p>
+        <p>Сайт создан Берг Яннес</p>
     </footer>
 
     <script>
-        function splitAndAnimateTitle() {
-            const title = document.getElementById('main-title');
-            if (!title) return;
-            const text = title.textContent.trim();
-            title.innerHTML = '';
-            text.split('').forEach((char, i) => {
-                const span = document.createElement('span');
-                span.className = 'split-char';
-                span.textContent = char === ' ' ? '\u00A0' : char;
-                title.appendChild(span);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-            const chars = title.querySelectorAll('.split-char');
-            chars.forEach((char, i) => {
-                setTimeout(() => char.style.opacity = '1', i * 32);
-            });
-        }
+        }, { threshold: 0.16 });
 
-        function initCards() {
-            document.querySelectorAll('.expandable-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.card-content')) return;
-                    this.classList.toggle('active');
-                });
-            });
-        }
+        document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 
-        function selectService(serviceName) {
-            document.getElementById('service').value = serviceName;
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function createBubbles() {
-            const container = document.getElementById('bubbles');
-            container.innerHTML = '';
-            for (let i = 0; i < 28; i++) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                const size = Math.random() * 24 + 8;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 10 + 8}s`;
-                bubble.style.animationDelay = `-${Math.random() * 25}s`;
-                container.appendChild(bubble);
+        const detailContent = {
+            boats: {
+                title: 'Лодки и снасти без лишней суеты',
+                images: [
+                    'https://images.pexels.com/photos/2131828/pexels-photo-2131828.jpeg?auto=compress&cs=tinysrgb&w=1000',
+                    'https://images.pexels.com/photos/2096622/pexels-photo-2096622.jpeg?auto=compress&cs=tinysrgb&w=1000'
+                ],
+                text: 'Перед приездом мы готовим лодку, весла или мотор, жилеты и базовые снасти. Администратор подскажет, где лучше начать ловлю утром и куда сместиться к вечеру.',
+                points: ['лодки на 2–4 человека', 'помощь с подбором снастей', 'маршруты к спокойным точкам клёва']
+            },
+            houses: {
+                title: 'Домики у берега для семьи и компании',
+                images: ['https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85'],
+                text: 'Домики стоят близко к воде: утром можно выйти на террасу с чаем и сразу увидеть озеро. Внутри — спальные места, тёплый свет, зона отдыха и всё базовое для короткого выезда.',
+                points: ['вид на воду с террасы', 'мангальная зона рядом', 'варианты на выходные и праздники']
+            },
+            fire: {
+                title: 'Баня, костёр и вечер после улова',
+                images: [
+                    'https://images.pexels.com/photos/1032001/pexels-photo-1032001.jpeg?auto=compress&cs=tinysrgb&w=1000',
+                    'https://images.pexels.com/photos/266308/pexels-photo-266308.jpeg?auto=compress&cs=tinysrgb&w=1000'
+                ],
+                text: 'После рыбалки можно заказать баню, приготовить улов на мангале и спокойно провести вечер у костра. Этот блок добавляет сайту настроение настоящей базы отдыха.',
+                points: ['баня по предварительной записи', 'место для костра и мангала', 'вечерний отдых после рыбалки']
             }
-        }
+        };
 
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('successMessage').textContent = '✅ Заявка отправлена!';
-            setTimeout(() => {
-                this.reset();
-                document.getElementById('successMessage').textContent = '';
-            }, 4000);
+        const details = document.getElementById('aboutDetails');
+        document.querySelectorAll('.about-card').forEach((card) => {
+            card.addEventListener('click', () => {
+                const item = detailContent[card.dataset.detail];
+                details.innerHTML = `
+                    <div class="about-media">
+                        ${item.images.map((image) => `<img src="${image}" alt="${item.title}" loading="lazy">`).join('')}
+                    </div>
+                    <div class="about-details-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.text}</p>
+                        <ul>${item.points.map((point) => `<li>${point}</li>`).join('')}</ul>
+                    </div>
+                `;
+                details.classList.add('active');
+                details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
         });
 
-        window.onload = () => {
-            createBubbles();
-            initCards();
-            splitAndAnimateTitle();
-            setTimeout(splitAndAnimateTitle, 700);
+        const toTop = document.getElementById('toTop');
+        window.addEventListener('scroll', () => {
+            toTop.classList.toggle('visible', window.scrollY > 520);
+        });
+
+        const serviceDetails = {
+            'Платная рыбалка': {
+                text: 'Формат для тех, кто приезжает на день: доступ к водоёму, мостки, помощь администратора и спокойные точки для ловли.',
+                points: ['подходит для одного дня', 'можно приехать со своими снастями', 'администратор подскажет актуальный клёв']
+            },
+            'Аренда домика': {
+                text: 'Комфортный вариант для семьи или компании, если хочется остаться у воды на ночь и не спешить домой после вечернего клёва.',
+                points: ['домики рядом с берегом', 'мангальная зона', 'варианты для выходных и праздников']
+            },
+            'Тур с проводником': {
+                text: 'Проводник помогает выбрать маршрут, подготовить лодку и найти точки, где больше шансов на хороший улов.',
+                points: ['сопровождение на водоёме', 'маршрут под погоду и сезон', 'можно совместить с арендой лодки']
+            },
+            'Аренда лодки': {
+                text: 'Лодка подготавливается к вашему приезду: выдаём жилеты, проверяем комплект и подсказываем безопасный маршрут.',
+                points: ['лодка на день', 'жилеты и базовая подготовка', 'удобно добавить к рыбалке или туру']
+            }
         };
+
+        const selectedFormats = new Set();
+        const selectedServices = document.getElementById('selectedServices');
+        const servicePicker = document.getElementById('servicePicker');
+        const serviceInput = document.getElementById('service');
+        const modal = document.getElementById('serviceModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+        const modalList = document.getElementById('modalList');
+        const modalClose = document.getElementById('modalClose');
+
+        function updateSelectedServices() {
+            const formats = [...selectedFormats];
+            serviceInput.value = formats.join(', ');
+            selectedServices.innerHTML = formats.length
+                ? `<strong>Выбрано:</strong> ${formats.join(', ')}`
+                : 'Выберите один или несколько форматов';
+        }
+
+        function openServiceModal(serviceName) {
+            const item = serviceDetails[serviceName];
+            modalTitle.textContent = serviceName;
+            modalText.textContent = item.text;
+            modalList.innerHTML = item.points.map((point) => `<li>${point}</li>`).join('');
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            modalClose.focus();
+        }
+
+        function closeServiceModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function syncSelectedUI() {
+            document.querySelectorAll('[data-service]').forEach((element) => {
+                element.classList.toggle('selected', selectedFormats.has(element.dataset.service));
+            });
+            servicePicker.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+                checkbox.checked = selectedFormats.has(checkbox.value);
+            });
+        }
+
+        function toggleService(serviceName) {
+            if (selectedFormats.has(serviceName)) {
+                selectedFormats.delete(serviceName);
+            } else {
+                selectedFormats.add(serviceName);
+            }
+            updateSelectedServices();
+            syncSelectedUI();
+            openServiceModal(serviceName);
+        }
+
+        document.querySelectorAll('.service-card, .price-row').forEach((element) => {
+            element.addEventListener('click', () => toggleService(element.dataset.service));
+        });
+
+        function closeServicePicker() {
+            servicePicker.classList.remove('active');
+            selectedServices.setAttribute('aria-expanded', 'false');
+        }
+
+        selectedServices.addEventListener('click', () => {
+            const isOpen = servicePicker.classList.toggle('active');
+            selectedServices.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('#selectedServices') && !event.target.closest('#servicePicker')) {
+                closeServicePicker();
+            }
+        });
+
+        servicePicker.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedFormats.add(checkbox.value);
+                } else {
+                    selectedFormats.delete(checkbox.value);
+                }
+                updateSelectedServices();
+                syncSelectedUI();
+            });
+        });
+
+        modalClose.addEventListener('click', closeServiceModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) closeServiceModal();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeServiceModal();
+                closeServicePicker();
+            }
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = document.getElementById('formMessage');
+            if (!selectedFormats.size) {
+                message.textContent = 'Выберите хотя бы один формат отдыха.';
+                return;
+            }
+            message.textContent = '✓ Заявка отправлена! Скоро свяжемся.';
+            setTimeout(() => {
+                event.target.reset();
+                selectedFormats.clear();
+                closeServicePicker();
+                syncSelectedUI();
+                updateSelectedServices();
+                message.textContent = '';
+            }, 4200);
+        });
     </script>
 </body>
 </html>
