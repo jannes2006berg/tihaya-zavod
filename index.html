@@ -5,362 +5,456 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тихая Заводь — рыбалка и отдых у воды</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
 
         :root {
-            --pine: #082d24;
-            --forest: #0f4a36;
-            --reed: #6ea77a;
-            --mint: #a7d8a9;
-            --sand: #f4dfbd;
-            --cream: #fff7e8;
-            --water: #174f5f;
-            --gold: #dba85d;
-            --glass: rgba(255, 247, 232, .1);
-            --shadow: 0 24px 70px rgba(4, 25, 20, .34);
+            --ink: #10251e;
+            --pine: #123b2b;
+            --leaf: #2f7d4c;
+            --moss: #8fbb61;
+            --lime: #d6ef75;
+            --sand: #f6ecd7;
+            --paper: #fbf8ee;
+            --water: #dcefe8;
+            --sky: #eef8f2;
+            --muted: #6e7f75;
+            --radius-lg: 42px;
+            --radius-md: 28px;
+            --shadow: 0 24px 70px rgba(16, 37, 30, .14);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--cream);
+            color: var(--ink);
             background:
-                radial-gradient(circle at 15% 12%, rgba(110,167,122,.28), transparent 28%),
-                radial-gradient(circle at 86% 6%, rgba(219,168,93,.22), transparent 24%),
-                linear-gradient(135deg, var(--pine) 0%, var(--forest) 52%, var(--water) 100%);
-            line-height: 1.6;
+                radial-gradient(circle at 82% 8%, rgba(214, 239, 117, .55), transparent 24%),
+                radial-gradient(circle at 10% 24%, rgba(220, 239, 232, .9), transparent 32%),
+                linear-gradient(180deg, var(--sky) 0%, var(--paper) 46%, #edf6e9 100%);
             overflow-x: hidden;
+            line-height: 1.55;
         }
         a { color: inherit; text-decoration: none; }
-        img { display: block; max-width: 100%; }
+        img { max-width: 100%; display: block; }
 
-        .water-lines {
+        .page-shell {
+            width: min(1220px, calc(100% - 36px));
+            margin: 0 auto;
+        }
+
+        .soft-grid {
             position: fixed;
             inset: 0;
-            z-index: 1;
+            z-index: 0;
             pointer-events: none;
-            opacity: .24;
+            opacity: .42;
             background-image:
-                repeating-radial-gradient(ellipse at 20% 80%, transparent 0 28px, rgba(255,255,255,.12) 29px 31px, transparent 32px 64px),
-                repeating-radial-gradient(ellipse at 82% 20%, transparent 0 34px, rgba(167,216,169,.1) 35px 37px, transparent 38px 76px);
-            animation: drift 18s linear infinite;
+                linear-gradient(rgba(18,59,43,.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18,59,43,.07) 1px, transparent 1px);
+            background-size: 82px 82px;
+            mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
         }
-        @keyframes drift { 50% { transform: translate3d(-18px, 12px, 0) scale(1.02); } }
 
         .fish {
             position: fixed;
-            left: -80px;
-            z-index: 2;
-            font-size: 2.1rem;
-            opacity: .22;
+            left: -90px;
+            z-index: 1;
+            font-size: 2rem;
+            opacity: .2;
             pointer-events: none;
-            animation: swim 30s linear infinite;
+            animation: swim 34s linear infinite;
         }
         @keyframes swim {
-            from { transform: translateX(-120px) rotate(-8deg); }
-            to { transform: translateX(calc(100vw + 220px)) rotate(10deg); }
+            from { transform: translateX(-120px) rotate(-7deg); }
+            to { transform: translateX(calc(100vw + 220px)) rotate(8deg); }
         }
 
         header {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: sticky;
+            top: 16px;
             z-index: 30;
-            width: min(1140px, calc(100% - 32px));
+            margin-top: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 18px;
-            padding: 14px 18px;
-            border: 1px solid rgba(255,247,232,.18);
-            border-radius: 28px;
-            background: rgba(8,45,36,.72);
+            padding: 12px 12px 12px 18px;
+            border: 1px solid rgba(18,59,43,.12);
+            border-radius: 999px;
+            background: rgba(251,248,238,.82);
             backdrop-filter: blur(18px);
-            box-shadow: 0 16px 45px rgba(4,25,20,.2);
+            box-shadow: 0 16px 42px rgba(16,37,30,.09);
         }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: .02em; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -.02em; }
         .logo-mark {
-            width: 42px; height: 42px; display: grid; place-items: center;
-            border-radius: 15px;
-            background: linear-gradient(145deg, var(--gold), var(--mint));
-            color: var(--pine);
-            box-shadow: inset 0 -8px 20px rgba(8,45,36,.18);
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--lime);
+            box-shadow: inset 0 -8px 16px rgba(18,59,43,.11);
         }
-        nav { display: flex; gap: 22px; font-size: .95rem; color: rgba(255,247,232,.86); }
-        .header-cta { padding: 12px 18px; border-radius: 999px; background: var(--sand); color: var(--pine); font-weight: 800; }
+        nav { display: flex; align-items: center; gap: 6px; }
+        nav a { padding: 12px 14px; border-radius: 999px; color: var(--muted); font-weight: 700; }
+        nav a:hover { background: var(--water); color: var(--pine); }
+        .header-cta { padding: 14px 20px; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 900; }
 
         .hero {
             position: relative;
             z-index: 5;
-            min-height: 100vh;
-            width: min(1180px, calc(100% - 36px));
-            margin: 0 auto;
-            padding: 135px 0 72px;
+            min-height: calc(100vh - 76px);
+            padding: 58px 0 70px;
             display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+            grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+            gap: 40px;
             align-items: center;
-            gap: 42px;
         }
         .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            margin-bottom: 22px;
             border-radius: 999px;
-            border: 1px solid rgba(255,247,232,.2);
-            background: rgba(255,247,232,.11);
-            color: var(--sand);
-            font-weight: 800;
+            background: #ffffff;
+            color: var(--leaf);
+            box-shadow: 0 12px 30px rgba(16,37,30,.08);
+            font-weight: 900;
+            margin-bottom: 22px;
         }
         h1, h2 { font-family: 'Playfair Display', serif; }
         h1 {
-            max-width: 760px;
-            font-size: clamp(3.35rem, 8vw, 7rem);
-            line-height: .9;
-            letter-spacing: -.055em;
+            font-size: clamp(3.7rem, 8.4vw, 7.8rem);
+            line-height: .84;
+            letter-spacing: -.065em;
+            max-width: 780px;
+            color: var(--ink);
             text-wrap: balance;
         }
-        .hero-text p {
-            max-width: 620px;
-            margin: 28px 0 34px;
-            font-size: clamp(1.05rem, 2vw, 1.3rem);
-            color: rgba(255,247,232,.82);
+        .accent-word {
+            display: inline-block;
+            padding: 0 .1em .08em;
+            border-radius: .22em;
+            background: var(--lime);
+            color: var(--pine);
+        }
+        .hero p {
+            max-width: 610px;
+            margin: 28px 0 32px;
+            color: var(--muted);
+            font-size: clamp(1.05rem, 2vw, 1.28rem);
+            font-weight: 600;
         }
         .actions { display: flex; flex-wrap: wrap; gap: 14px; }
         .btn {
             display: inline-flex;
+            min-height: 56px;
             align-items: center;
             justify-content: center;
-            min-height: 56px;
+            gap: 10px;
             padding: 0 24px;
+            border: 0;
             border-radius: 999px;
-            border: 1px solid rgba(255,247,232,.22);
+            font: inherit;
             font-weight: 900;
             cursor: pointer;
             transition: transform .25s, box-shadow .25s, background .25s;
         }
         .btn:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-        .btn-primary { background: var(--sand); color: var(--pine); }
-        .btn-secondary { background: rgba(255,255,255,.08); color: var(--cream); }
+        .btn-primary { background: var(--ink); color: var(--paper); }
+        .btn-secondary { background: #ffffff; color: var(--pine); box-shadow: 0 12px 30px rgba(16,37,30,.07); }
 
-        .hero-card {
+        .hero-visual {
             position: relative;
-            min-height: 570px;
-            overflow: hidden;
-            border-radius: 44px;
-            background:
-                linear-gradient(rgba(8,45,36,.08), rgba(8,45,36,.72)),
-                url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=85') center/cover;
-            border: 1px solid rgba(255,247,232,.24);
+            min-height: 610px;
+            border-radius: 54px;
+            padding: 18px;
+            background: linear-gradient(145deg, #ffffff, var(--water));
             box-shadow: var(--shadow);
+            overflow: hidden;
         }
-        .hero-card::before {
+        .hero-visual::before {
             content: '';
             position: absolute;
-            inset: 24px;
-            border: 1px solid rgba(255,247,232,.28);
-            border-radius: 32px;
+            inset: 12% -10% auto auto;
+            width: 78%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--lime);
+            opacity: .8;
         }
-        .weather-card, .catch-card {
+        .hero-photo {
+            position: relative;
+            height: 100%;
+            min-height: 574px;
+            border-radius: 42px;
+            background:
+                linear-gradient(180deg, rgba(16,37,30,.05), rgba(16,37,30,.55)),
+                url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=85') center/cover;
+            overflow: hidden;
+        }
+        .hero-photo::after {
+            content: '';
             position: absolute;
-            padding: 18px;
-            border-radius: 24px;
-            background: rgba(8,45,36,.68);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,247,232,.16);
+            inset: auto 0 0;
+            height: 42%;
+            background: linear-gradient(transparent, rgba(16,37,30,.72));
         }
-        .weather-card { right: 28px; bottom: 28px; max-width: 280px; }
-        .catch-card { left: 28px; top: 28px; display: grid; gap: 2px; }
-        .catch-card strong { font-size: 2rem; color: var(--mint); line-height: 1; }
+        .stat-card, .mini-card {
+            position: absolute;
+            z-index: 3;
+            border-radius: 26px;
+            background: rgba(255,255,255,.88);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 18px 44px rgba(16,37,30,.13);
+            border: 1px solid rgba(255,255,255,.7);
+        }
+        .stat-card { left: 0; bottom: 46px; padding: 20px 22px; transform: translateX(-22px); }
+        .stat-card strong { display: block; font-size: 2.35rem; line-height: 1; color: var(--leaf); }
+        .mini-card { right: 34px; top: 34px; max-width: 230px; padding: 18px; }
+        .mini-card strong { color: var(--pine); }
+        .mini-card p, .stat-card span { color: var(--muted); font-weight: 700; }
 
         .section {
             position: relative;
             z-index: 5;
-            width: min(1180px, calc(100% - 36px));
-            margin: 0 auto 28px;
-            padding: 82px 0;
-        }
-        .panel {
-            padding: clamp(26px, 5vw, 58px);
-            border-radius: 46px;
-            border: 1px solid rgba(255,255,255,.5);
-            background: rgba(255,247,232,.9);
-            color: var(--pine);
-            box-shadow: var(--shadow);
+            padding: 78px 0;
         }
         .section-head {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
             align-items: end;
-            gap: 24px;
+            gap: 32px;
             margin-bottom: 34px;
         }
-        h2 { color: var(--forest); font-size: clamp(2.25rem, 5vw, 4.6rem); line-height: .96; letter-spacing: -.04em; }
-        .section-head p { max-width: 430px; color: rgba(8,45,36,.7); font-weight: 600; }
+        h2 {
+            color: var(--ink);
+            font-size: clamp(2.35rem, 5vw, 5rem);
+            line-height: .92;
+            letter-spacing: -.05em;
+            text-wrap: balance;
+        }
+        .section-head p { color: var(--muted); font-weight: 700; font-size: 1.05rem; }
 
-        .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
         .card {
             position: relative;
-            overflow: hidden;
-            min-height: 235px;
+            min-height: 250px;
             padding: 24px;
-            border-radius: 30px;
-            background: linear-gradient(145deg, #fff7e8, #dff0d8);
-            border: 1px solid rgba(8,45,36,.1);
+            border-radius: var(--radius-md);
+            background: #ffffff;
+            border: 1px solid rgba(18,59,43,.08);
+            box-shadow: 0 16px 44px rgba(16,37,30,.08);
+            overflow: hidden;
             transition: transform .25s, box-shadow .25s;
         }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 18px 45px rgba(8,45,36,.18); }
-        .card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--forest); }
-        .card p { color: rgba(8,45,36,.68); }
-        .card-icon { font-size: 2.4rem; margin-bottom: 22px; }
-        .price { position: absolute; left: 24px; bottom: 24px; color: var(--forest); font-size: 1.55rem; font-weight: 900; }
-        .tag { position: absolute; right: 18px; top: 18px; padding: 8px 12px; border-radius: 999px; background: var(--forest); color: var(--sand); font-size: .8rem; font-weight: 900; }
+        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+        .card::after {
+            content: '';
+            position: absolute;
+            right: -44px;
+            bottom: -54px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--lime);
+            opacity: .36;
+        }
+        .card-icon { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 18px; background: var(--water); font-size: 1.8rem; margin-bottom: 28px; }
+        .card h3 { color: var(--pine); font-size: 1.38rem; margin-bottom: 10px; }
+        .card p { color: var(--muted); font-weight: 600; }
+        .price { position: absolute; left: 24px; bottom: 24px; color: var(--leaf); font-size: 1.55rem; font-weight: 900; }
+        .tag { position: absolute; right: 18px; top: 18px; z-index: 2; padding: 8px 12px; border-radius: 999px; background: var(--lime); color: var(--pine); font-size: .8rem; font-weight: 900; }
 
-        .dark-panel { background: rgba(8,45,36,.82); color: var(--cream); border-color: rgba(255,247,232,.16); }
-        .dark-panel h2 { color: var(--sand); }
-        .dark-panel .section-head p { color: rgba(255,247,232,.72); }
-        .dark-card { background: rgba(255,247,232,.08); color: var(--cream); border-color: rgba(255,247,232,.14); }
-        .dark-card h3 { color: var(--mint); }
-        .dark-card p { color: rgba(255,247,232,.72); }
-        .dark-card .price { color: var(--sand); }
+        .dark-band {
+            margin: 20px 0;
+            padding: 54px;
+            border-radius: 54px;
+            background: var(--ink);
+            color: var(--paper);
+            box-shadow: var(--shadow);
+        }
+        .dark-band h2 { color: var(--paper); }
+        .dark-band .section-head p { color: rgba(251,248,238,.7); }
+        .service-card { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.12); color: var(--paper); cursor: pointer; }
+        .service-card::after { background: var(--moss); opacity: .28; }
+        .service-card h3 { color: var(--lime); }
+        .service-card p { color: rgba(251,248,238,.72); }
+        .service-card .price { color: var(--paper); }
 
-        .gallery { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 18px; }
-        .gallery img { width: 100%; height: 340px; object-fit: cover; border-radius: 32px; box-shadow: 0 18px 48px rgba(4,25,20,.2); }
-        .gallery img:first-child { height: 520px; grid-row: span 2; }
+        .gallery {
+            display: grid;
+            grid-template-columns: 1.16fr .84fr;
+            gap: 18px;
+        }
+        .gallery-main, .gallery-side {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .gallery-main img { width: 100%; height: 560px; object-fit: cover; }
+        .gallery-side { display: grid; gap: 18px; box-shadow: none; }
+        .gallery-side img { width: 100%; height: 271px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
 
-        .booking { display: grid; grid-template-columns: .85fr 1.15fr; gap: 22px; align-items: stretch; }
-        .booking-side { padding: 34px; border-radius: 32px; background: linear-gradient(145deg, var(--forest), var(--pine)); color: var(--cream); }
-        form { display: grid; gap: 12px; }
+        .booking-panel {
+            display: grid;
+            grid-template-columns: .85fr 1.15fr;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 54px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+        }
+        .booking-side {
+            padding: 34px;
+            border-radius: 42px;
+            background:
+                linear-gradient(rgba(16,37,30,.22), rgba(16,37,30,.7)),
+                url('https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85') center/cover;
+            color: var(--paper);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+        .booking-side h2 { color: var(--paper); font-size: clamp(2.1rem, 4vw, 3.8rem); }
+        .booking-side p { margin-top: 18px; color: rgba(251,248,238,.78); font-weight: 700; }
+        form { display: grid; align-content: center; gap: 12px; padding: 22px; }
         input, select, textarea {
             width: 100%;
-            padding: 16px 18px;
-            border: 1px solid rgba(8,45,36,.16);
+            padding: 17px 18px;
+            border: 1px solid rgba(18,59,43,.12);
             border-radius: 18px;
-            background: rgba(255,255,255,.72);
-            color: var(--pine);
+            background: var(--sky);
+            color: var(--ink);
             font: inherit;
+            font-weight: 600;
         }
-        textarea { min-height: 116px; resize: vertical; }
-        button { border: 0; }
-        .form-message { min-height: 24px; color: var(--forest); font-weight: 900; text-align: center; }
+        textarea { min-height: 118px; resize: vertical; }
+        .form-message { min-height: 24px; color: var(--leaf); font-weight: 900; text-align: center; }
 
-        footer { position: relative; z-index: 5; padding: 34px 18px 48px; text-align: center; color: rgba(255,247,232,.72); }
+        footer { position: relative; z-index: 5; padding: 34px 18px 48px; color: var(--muted); text-align: center; font-weight: 700; }
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 900px) {
+        @media (max-width: 940px) {
+            header { border-radius: 28px; align-items: flex-start; }
             nav { display: none; }
-            .hero, .booking { grid-template-columns: 1fr; }
-            .hero-card { min-height: 430px; }
-            .grid, .gallery { grid-template-columns: 1fr; }
-            .gallery img, .gallery img:first-child { height: 300px; grid-row: auto; }
-            .section-head { align-items: start; flex-direction: column; }
+            .hero, .section-head, .booking-panel, .gallery { grid-template-columns: 1fr; }
+            .hero { padding-top: 46px; }
+            .hero-visual { min-height: 460px; }
+            .hero-photo { min-height: 424px; }
+            .stat-card { left: 18px; transform: none; }
+            .cards { grid-template-columns: 1fr; }
+            .dark-band { padding: 28px; border-radius: 34px; }
+            .gallery-main img, .gallery-side img { height: 310px; }
+            .booking-panel { border-radius: 34px; }
         }
     </style>
 </head>
 <body>
-    <div class="water-lines" aria-hidden="true"></div>
-    <div class="fish" style="top: 18%; animation-delay: -2s;">🐟</div>
-    <div class="fish" style="top: 42%; animation-delay: -12s; font-size: 1.8rem;">🐠</div>
-    <div class="fish" style="top: 70%; animation-delay: -21s;">🐟</div>
+    <div class="soft-grid" aria-hidden="true"></div>
+    <div class="fish" style="top: 20%; animation-delay: -4s;">🐟</div>
+    <div class="fish" style="top: 58%; animation-delay: -17s; font-size: 1.7rem;">🐠</div>
 
-    <header>
-        <a class="logo" href="#top" aria-label="Тихая Заводь">
-            <span class="logo-mark">🎣</span>
-            <span>Тихая Заводь</span>
-        </a>
-        <nav aria-label="Основная навигация">
-            <a href="#about">О базе</a>
-            <a href="#services">Услуги</a>
-            <a href="#gallery">Галерея</a>
-            <a href="#booking">Заявка</a>
-        </nav>
-        <a class="header-cta" href="#booking">Забронировать</a>
-    </header>
+    <div class="page-shell">
+        <header>
+            <a class="logo" href="#top" aria-label="Тихая Заводь">
+                <span class="logo-mark">🎣</span>
+                <span>Тихая Заводь</span>
+            </a>
+            <nav aria-label="Основная навигация">
+                <a href="#about">О базе</a>
+                <a href="#services">Услуги</a>
+                <a href="#gallery">Галерея</a>
+                <a href="#booking">Заявка</a>
+            </nav>
+            <a class="header-cta" href="#booking">Забронировать</a>
+        </header>
 
-    <main id="top">
-        <section class="hero">
-            <div class="hero-text reveal">
-                <span class="eyebrow">клёвые выходные · домики у воды</span>
-                <h1>Рыбалка, после которой хочется вернуться</h1>
-                <p>«Тихая Заводь» — атмосферная база отдыха для тех, кто любит утренний туман, честный клёв, баню на берегу и уютные вечера у костра.</p>
-                <div class="actions">
-                    <a class="btn btn-primary" href="#services">Выбрать отдых</a>
-                    <a class="btn btn-secondary" href="#gallery">Посмотреть место</a>
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy reveal">
+                    <span class="eyebrow">рыбалка · домики · баня у воды</span>
+                    <h1>Тихий отдых и <span class="accent-word">честный клёв</span></h1>
+                    <p>Лёгкий светлый дизайн в духе современных eco-landing страниц, но с атмосферой рыбацкой базы: озеро, лодки, снасти и уютные вечера у костра.</p>
+                    <div class="actions">
+                        <a class="btn btn-primary" href="#services">Выбрать формат</a>
+                        <a class="btn btn-secondary" href="#gallery">Смотреть локацию</a>
+                    </div>
                 </div>
-            </div>
-            <div class="hero-card reveal" aria-label="Озеро и рыбалка">
-                <div class="catch-card"><strong>10+</strong><span>лет знаем лучшие точки</span></div>
-                <div class="weather-card">
-                    <strong>Идеально для отдыха на 1–3 дня</strong>
-                    <p>Лодки, снасти, проводник и домики — всё можно собрать в один удобный пакет.</p>
+
+                <div class="hero-visual reveal" aria-label="Озеро и рыбалка">
+                    <div class="hero-photo"></div>
+                    <div class="mini-card"><strong>Готовый отдых за день</strong><p>Домик, лодка, снасти и маршрут к точкам клёва.</p></div>
+                    <div class="stat-card"><strong>10+</strong><span>лет знаем водоём</span></div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section panel reveal" id="about">
-            <div class="section-head">
-                <h2>Всё для спокойного улова</h2>
-                <p>Мы сделали сайт более современным: крупные блоки, премиальная сетка, карточки и живые акценты, но сохранили тему рыбалки.</p>
-            </div>
-            <div class="grid">
-                <article class="card"><div class="card-icon">🛶</div><h3>Лодки и снасти</h3><p>Подготовленные лодки, базовый комплект снастей и подсказки по лучшим местам на водоёме.</p></article>
-                <article class="card"><div class="card-icon">🏡</div><h3>Домики у берега</h3><p>Тёплые домики с удобствами, мангальной зоной и видом на воду прямо с террасы.</p></article>
-                <article class="card"><div class="card-icon">🔥</div><h3>Баня и костёр</h3><p>После рыбалки можно отдохнуть в бане, приготовить улов и провести вечер у огня.</p></article>
-            </div>
-        </section>
+            <section class="section reveal" id="about">
+                <div class="section-head">
+                    <h2>База для тех, кто любит воду и тишину</h2>
+                    <p>Светлые блоки, большие скругления и зелёные акценты делают сайт современным, а контент остаётся полностью про рыбалку.</p>
+                </div>
+                <div class="cards">
+                    <article class="card"><div class="card-icon">🛶</div><h3>Лодки и снасти</h3><p>Подготовленные лодки, базовый комплект снастей и подсказки по лучшим местам на водоёме.</p></article>
+                    <article class="card"><div class="card-icon">🏡</div><h3>Домики у берега</h3><p>Тёплые домики с удобствами, мангальной зоной и видом на воду прямо с террасы.</p></article>
+                    <article class="card"><div class="card-icon">🔥</div><h3>Баня и костёр</h3><p>После рыбалки можно отдохнуть в бане, приготовить улов и провести вечер у огня.</p></article>
+                </div>
+            </section>
 
-        <section class="section panel dark-panel reveal" id="services">
-            <div class="section-head">
-                <h2>Форматы отдыха</h2>
-                <p>Кликайте на услугу — она сразу подставится в форму заявки.</p>
-            </div>
-            <div class="grid">
-                <article class="card dark-card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span></article>
-                <article class="card dark-card service-card" data-service="Аренда домика"><h3>Аренда домика</h3><p>Комфортное размещение для семьи или компании на сутки и больше.</p><span class="price">от 3 000 ₽</span></article>
-                <article class="card dark-card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span></article>
-            </div>
-        </section>
+            <section class="section dark-band reveal" id="services">
+                <div class="section-head">
+                    <h2>Форматы отдыха</h2>
+                    <p>Кликайте на карточку — выбранная услуга сразу появится в форме заявки.</p>
+                </div>
+                <div class="cards">
+                    <article class="card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span></article>
+                    <article class="card service-card" data-service="Аренда домика"><h3>Аренда домика</h3><p>Комфортное размещение для семьи или компании на сутки и больше.</p><span class="price">от 3 000 ₽</span></article>
+                    <article class="card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span></article>
+                </div>
+            </section>
 
-        <section class="section reveal" id="gallery">
-            <div class="section-head">
-                <h2 style="color: var(--sand);">Галерея места</h2>
-                <p style="color: rgba(255,247,232,.76);">Фотографии создают ощущение настоящей базы: вода, лес, домики и утренний туман.</p>
-            </div>
-            <div class="gallery">
-                <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85" alt="Лесное озеро" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?auto=format&fit=crop&w=900&q=85" alt="Рыбак у воды" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85" alt="Лодка на озере" loading="lazy">
-            </div>
-        </section>
+            <section class="section reveal" id="gallery">
+                <div class="section-head">
+                    <h2>Место, которое легко представить в портфолио</h2>
+                    <p>Большая фото-сетка с природой и водой помогает лендингу выглядеть как готовый коммерческий проект.</p>
+                </div>
+                <div class="gallery">
+                    <div class="gallery-main"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=85" alt="Лесное озеро" loading="lazy"></div>
+                    <div class="gallery-side">
+                        <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?auto=format&fit=crop&w=900&q=85" alt="Рыбак у воды" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85" alt="Лодка на озере" loading="lazy">
+                    </div>
+                </div>
+            </section>
 
-        <section class="section panel reveal" id="booking">
-            <div class="booking">
-                <aside class="booking-side">
-                    <h2 style="color: var(--sand); font-size: clamp(2.2rem, 4vw, 3.6rem);">Оставить заявку</h2>
-                    <p style="margin-top: 18px; color: rgba(255,247,232,.75);">Напишите желаемую дату и формат отдыха — мы подберём домик, лодку и удобное время приезда.</p>
-                </aside>
-                <form id="bookingForm">
-                    <select id="service" required>
-                        <option value="">Выберите услугу</option>
-                        <option>Платная рыбалка</option>
-                        <option>Аренда домика</option>
-                        <option>Тур с проводником</option>
-                        <option>Аренда лодки</option>
-                    </select>
-                    <input type="text" placeholder="Ваше имя" required>
-                    <input type="tel" placeholder="Телефон" required>
-                    <input type="date" aria-label="Дата приезда">
-                    <textarea placeholder="Сколько человек, нужны ли домик, лодка, баня или снасти"></textarea>
-                    <button class="btn btn-primary" type="submit">Отправить заявку</button>
-                    <div class="form-message" id="formMessage"></div>
-                </form>
-            </div>
-        </section>
-    </main>
+            <section class="section reveal" id="booking">
+                <div class="booking-panel">
+                    <aside class="booking-side">
+                        <h2>Оставить заявку</h2>
+                        <p>Напишите желаемую дату и формат отдыха — мы подберём домик, лодку и удобное время приезда.</p>
+                    </aside>
+                    <form id="bookingForm">
+                        <select id="service" required>
+                            <option value="">Выберите услугу</option>
+                            <option>Платная рыбалка</option>
+                            <option>Аренда домика</option>
+                            <option>Тур с проводником</option>
+                            <option>Аренда лодки</option>
+                        </select>
+                        <input type="text" placeholder="Ваше имя" required>
+                        <input type="tel" placeholder="Телефон" required>
+                        <input type="date" aria-label="Дата приезда">
+                        <textarea placeholder="Сколько человек, нужны ли домик, лодка, баня или снасти"></textarea>
+                        <button class="btn btn-primary" type="submit">Отправить заявку</button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <footer>
         <p>© 2026 Тихая Заводь — рыбалка и отдых у воды</p>
