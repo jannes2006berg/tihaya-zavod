@@ -264,6 +264,57 @@
         .card-icon { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 18px; background: var(--water); font-size: 1.8rem; margin-bottom: 28px; }
         .card h3 { color: var(--pine); font-size: 1.38rem; margin-bottom: 10px; }
         .card p { color: var(--muted); font-weight: 600; }
+        .about-card { cursor: pointer; padding-bottom: 82px; }
+        .about-card::before {
+            content: 'Подробнее';
+            position: absolute;
+            left: 24px;
+            bottom: 24px;
+            z-index: 2;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--paper);
+            font-size: .86rem;
+            font-weight: 900;
+        }
+        .about-details {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: .95fr 1.05fr;
+            gap: 24px;
+            align-items: stretch;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            transition: max-height .55s ease, opacity .35s ease, padding .35s ease, margin .35s ease;
+        }
+        .about-details.active {
+            max-height: 760px;
+            opacity: 1;
+            padding: 18px;
+            margin-top: 6px;
+        }
+        .about-details img {
+            width: 100%;
+            height: 100%;
+            min-height: 360px;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+        .about-details-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(20px, 4vw, 38px);
+        }
+        .about-details-content h3 { color: var(--pine); font-size: clamp(1.7rem, 3vw, 2.7rem); margin-bottom: 16px; }
+        .about-details-content p { color: var(--muted); font-weight: 700; margin-bottom: 14px; }
+        .about-details-content ul { display: grid; gap: 10px; padding-left: 20px; color: var(--ink); font-weight: 800; }
         .price { position: absolute; left: 24px; bottom: 24px; color: var(--leaf); font-size: 1.55rem; font-weight: 900; }
         .tag { position: absolute; right: 18px; top: 18px; z-index: 2; padding: 8px 12px; border-radius: 999px; background: var(--lime); color: var(--pine); font-size: .8rem; font-weight: 900; }
 
@@ -320,6 +371,34 @@
         }
         .booking-side h2 { color: var(--paper); font-size: clamp(2.1rem, 4vw, 3.8rem); }
         .booking-side p { margin-top: 18px; color: rgba(251,248,238,.78); font-weight: 700; }
+        .map-panel {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 54px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+        }
+        .map-info {
+            padding: 34px;
+            border-radius: 42px;
+            background: var(--ink);
+            color: var(--paper);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .map-info h2 { color: var(--paper); font-size: clamp(2.1rem, 4vw, 3.8rem); }
+        .map-info p { margin-top: 18px; color: rgba(251,248,238,.75); font-weight: 700; }
+        .address-card { margin-top: 24px; padding: 18px; border-radius: 24px; background: rgba(255,255,255,.1); font-weight: 900; }
+        .map-frame {
+            min-height: 430px;
+            width: 100%;
+            border: 0;
+            border-radius: 42px;
+            filter: saturate(.92) contrast(1.02);
+        }
         form { display: grid; align-content: center; gap: 12px; padding: 22px; }
         input, select, textarea {
             width: 100%;
@@ -334,6 +413,27 @@
         textarea { min-height: 118px; resize: vertical; }
         .form-message { min-height: 24px; color: var(--leaf); font-weight: 900; text-align: center; }
 
+        .to-top {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 40;
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--paper);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity .25s, transform .25s;
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+        .to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
         footer { position: relative; z-index: 5; padding: 34px 18px 48px; color: var(--muted); text-align: center; font-weight: 700; }
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -341,7 +441,7 @@
         @media (max-width: 940px) {
             header { border-radius: 28px; align-items: flex-start; }
             nav { display: none; }
-            .hero, .section-head, .booking-panel, .gallery { grid-template-columns: 1fr; }
+            .hero, .section-head, .booking-panel, .gallery, .about-details, .map-panel { grid-template-columns: 1fr; }
             .hero { padding-top: 46px; }
             .hero-visual { min-height: 460px; }
             .hero-photo { min-height: 424px; }
@@ -349,7 +449,9 @@
             .cards { grid-template-columns: 1fr; }
             .dark-band { padding: 28px; border-radius: 34px; }
             .gallery-main img, .gallery-side img { height: 310px; }
-            .booking-panel { border-radius: 34px; }
+            .booking-panel, .map-panel { border-radius: 34px; }
+            .about-details.active { max-height: 980px; }
+            .about-details img, .map-frame { min-height: 300px; }
         }
     </style>
 </head>
@@ -357,6 +459,7 @@
     <div class="soft-grid" aria-hidden="true"></div>
     <div class="fish" style="top: 20%; animation-delay: -4s;">🐟</div>
     <div class="fish" style="top: 58%; animation-delay: -17s; font-size: 1.7rem;">🐠</div>
+    <a class="to-top" id="toTop" href="#top" aria-label="Наверх">↑</a>
 
     <div class="page-shell">
         <header>
@@ -368,6 +471,7 @@
                 <a href="#about">О базе</a>
                 <a href="#services">Услуги</a>
                 <a href="#gallery">Галерея</a>
+                <a href="#map">Карта</a>
                 <a href="#booking">Заявка</a>
             </nav>
             <a class="header-cta" href="#booking">Забронировать</a>
@@ -398,9 +502,10 @@
                     <p>Светлые блоки, большие скругления и зелёные акценты делают сайт современным, а контент остаётся полностью про рыбалку.</p>
                 </div>
                 <div class="cards">
-                    <article class="card"><div class="card-icon">🛶</div><h3>Лодки и снасти</h3><p>Подготовленные лодки, базовый комплект снастей и подсказки по лучшим местам на водоёме.</p></article>
-                    <article class="card"><div class="card-icon">🏡</div><h3>Домики у берега</h3><p>Тёплые домики с удобствами, мангальной зоной и видом на воду прямо с террасы.</p></article>
-                    <article class="card"><div class="card-icon">🔥</div><h3>Баня и костёр</h3><p>После рыбалки можно отдохнуть в бане, приготовить улов и провести вечер у огня.</p></article>
+                    <article class="card about-card" data-detail="boats"><div class="card-icon">🛶</div><h3>Лодки и снасти</h3><p>Подготовленные лодки, базовый комплект снастей и подсказки по лучшим местам на водоёме.</p></article>
+                    <article class="card about-card" data-detail="houses"><div class="card-icon">🏡</div><h3>Домики у берега</h3><p>Тёплые домики с удобствами, мангальной зоной и видом на воду прямо с террасы.</p></article>
+                    <article class="card about-card" data-detail="fire"><div class="card-icon">🔥</div><h3>Баня и костёр</h3><p>После рыбалки можно отдохнуть в бане, приготовить улов и провести вечер у огня.</p></article>
+                    <div class="about-details" id="aboutDetails" aria-live="polite"></div>
                 </div>
             </section>
 
@@ -427,6 +532,17 @@
                         <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?auto=format&fit=crop&w=900&q=85" alt="Рыбак у воды" loading="lazy">
                         <img src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=900&q=85" alt="Лодка на озере" loading="lazy">
                     </div>
+                </div>
+            </section>
+
+            <section class="section reveal" id="map">
+                <div class="map-panel">
+                    <div class="map-info">
+                        <h2>Как нас найти</h2>
+                        <p>Для портфолио указал подходящую локацию у воды: рядом с Валдайским озером, где атмосфера хорошо подходит для базы рыбалки и отдыха.</p>
+                        <div class="address-card">Новгородская область, Валдай, ул. Лесная, 12</div>
+                    </div>
+                    <iframe class="map-frame" title="Карта: Тихая Заводь" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=33.225%2C57.955%2C33.335%2C58.015&amp;layer=mapnik&amp;marker=57.9828%2C33.2524"></iframe>
                 </div>
             </section>
 
@@ -469,6 +585,49 @@
         }, { threshold: 0.16 });
 
         document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+        const detailContent = {
+            boats: {
+                title: 'Лодки и снасти без лишней суеты',
+                image: 'https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=1000&q=85',
+                text: 'Перед приездом мы готовим лодку, весла или мотор, жилеты и базовые снасти. Администратор подскажет, где лучше начать ловлю утром и куда сместиться к вечеру.',
+                points: ['лодки на 2–4 человека', 'помощь с подбором снастей', 'маршруты к спокойным точкам клёва']
+            },
+            houses: {
+                title: 'Домики у берега для семьи и компании',
+                image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85',
+                text: 'Домики стоят близко к воде: утром можно выйти на террасу с чаем и сразу увидеть озеро. Внутри — спальные места, тёплый свет, зона отдыха и всё базовое для короткого выезда.',
+                points: ['вид на воду с террасы', 'мангальная зона рядом', 'варианты на выходные и праздники']
+            },
+            fire: {
+                title: 'Баня, костёр и вечер после улова',
+                image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85',
+                text: 'После рыбалки можно заказать баню, приготовить улов на мангале и спокойно провести вечер у костра. Этот блок добавляет сайту настроение настоящей базы отдыха.',
+                points: ['баня по предварительной записи', 'место для костра и мангала', 'вечерний отдых после рыбалки']
+            }
+        };
+
+        const details = document.getElementById('aboutDetails');
+        document.querySelectorAll('.about-card').forEach((card) => {
+            card.addEventListener('click', () => {
+                const item = detailContent[card.dataset.detail];
+                details.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <div class="about-details-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.text}</p>
+                        <ul>${item.points.map((point) => `<li>${point}</li>`).join('')}</ul>
+                    </div>
+                `;
+                details.classList.add('active');
+                details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+
+        const toTop = document.getElementById('toTop');
+        window.addEventListener('scroll', () => {
+            toTop.classList.toggle('visible', window.scrollY > 520);
+        });
 
         document.querySelectorAll('.service-card').forEach((card) => {
             card.addEventListener('click', () => {
