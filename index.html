@@ -350,7 +350,7 @@
             border-radius: 50%;
             background: var(--lime);
             color: var(--pine);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 900;
         }
         .service-card.selected {
@@ -394,7 +394,7 @@
             border-radius: 50%;
             background: var(--lime);
             color: var(--pine);
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 900;
             cursor: pointer;
         }
@@ -620,15 +620,15 @@
                     <p>Кликайте на карточки — можно выбрать сразу несколько форматов, а подробности откроются во всплывающем окне.</p>
                 </div>
                 <div class="cards">
-                    <article class="card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span><span class="service-plus" aria-hidden="true">+</span></article>
-                    <article class="card service-card" data-service="Аренда домика"><h3>Аренда домика</h3><p>Комфортное размещение для семьи или компании на сутки и больше.</p><span class="price">от 3 000 ₽</span><span class="service-plus" aria-hidden="true">+</span></article>
-                    <article class="card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span><span class="service-plus" aria-hidden="true">+</span></article>
+                    <article class="card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
+                    <article class="card service-card" data-service="Аренда домика"><h3>Аренда домика</h3><p>Комфортное размещение для семьи или компании на сутки и больше.</p><span class="price">от 3 000 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
+                    <article class="card service-card" data-service="Тур с проводником"><span class="tag">улов</span><h3>Тур с проводником</h3><p>Маршрут, лодка, точки клёва и сопровождение опытного проводника.</p><span class="price">от 5 500 ₽</span><span class="service-plus" aria-hidden="true">🐟</span></article>
                 </div>
                 <div class="price-table" aria-label="Таблица цен">
-                    <div class="price-row" data-service="Платная рыбалка"><strong>Платная рыбалка</strong><b>от 1 500 ₽</b><span>Дневной доступ к водоёму и мосткам</span><button type="button" aria-label="Выбрать платную рыбалку">+</button></div>
-                    <div class="price-row" data-service="Аренда домика"><strong>Аренда домика</strong><b>от 3 000 ₽</b><span>Домик у берега для семьи или компании</span><button type="button" aria-label="Выбрать аренду домика">+</button></div>
-                    <div class="price-row" data-service="Тур с проводником"><strong>Тур с проводником</strong><b>от 5 500 ₽</b><span>Маршрут, лодка и точки клёва</span><button type="button" aria-label="Выбрать тур с проводником">+</button></div>
-                    <div class="price-row" data-service="Аренда лодки"><strong>Аренда лодки</strong><b>от 2 000 ₽</b><span>Лодка на день с жилетами и базовой подготовкой</span><button type="button" aria-label="Выбрать аренду лодки">+</button></div>
+                    <div class="price-row" data-service="Платная рыбалка"><strong>Платная рыбалка</strong><b>от 1 500 ₽</b><span>Дневной доступ к водоёму и мосткам</span><button type="button" aria-label="Выбрать платную рыбалку">🐟</button></div>
+                    <div class="price-row" data-service="Аренда домика"><strong>Аренда домика</strong><b>от 3 000 ₽</b><span>Домик у берега для семьи или компании</span><button type="button" aria-label="Выбрать аренду домика">🐟</button></div>
+                    <div class="price-row" data-service="Тур с проводником"><strong>Тур с проводником</strong><b>от 5 500 ₽</b><span>Маршрут, лодка и точки клёва</span><button type="button" aria-label="Выбрать тур с проводником">🐟</button></div>
+                    <div class="price-row" data-service="Аренда лодки"><strong>Аренда лодки</strong><b>от 2 000 ₽</b><span>Лодка на день с жилетами и базовой подготовкой</span><button type="button" aria-label="Выбрать аренду лодки">🐟</button></div>
                 </div>
             </section>
 
@@ -669,7 +669,14 @@
                         <input type="text" placeholder="Ваше имя" required>
                         <input type="tel" placeholder="Телефон" required>
                         <input type="date" aria-label="Дата приезда">
-                        <textarea placeholder="Сколько человек, нужны ли домик, лодка, баня или снасти"></textarea>
+                        <select id="readyOption" aria-label="Готовый вариант отдыха">
+                            <option value="">Выберите готовый вариант, чтобы не писать вручную</option>
+                            <option value="1 человек, рыбалка на день, свои снасти">1 человек — рыбалка на день</option>
+                            <option value="2–3 человека, нужна лодка и базовые снасти">2–3 человека — лодка и снасти</option>
+                            <option value="Семья, домик у берега, мангал и вечерняя баня">Семья — домик, мангал и баня</option>
+                            <option value="Компания 4–6 человек, домик, лодка, баня и тур с проводником">Компания — полный отдых с проводником</option>
+                        </select>
+                        <textarea id="message" placeholder="Или напишите свой вариант: сколько человек, нужны ли домик, лодка, баня или снасти"></textarea>
                         <button class="btn btn-primary" type="submit">Отправить заявку</button>
                         <div class="form-message" id="formMessage"></div>
                     </form>
@@ -820,6 +827,11 @@
         });
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') closeServiceModal();
+        });
+
+        document.getElementById('readyOption').addEventListener('change', (event) => {
+            const messageField = document.getElementById('message');
+            if (event.target.value) messageField.value = event.target.value;
         });
 
         document.getElementById('bookingForm').addEventListener('submit', (event) => {
