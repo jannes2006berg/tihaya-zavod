@@ -333,6 +333,49 @@
         .service-card h3 { color: var(--lime); }
         .service-card p { color: rgba(251,248,238,.72); }
         .service-card .price { color: var(--paper); }
+        .service-card.selected {
+            outline: 3px solid var(--lime);
+            background: rgba(214,239,117,.16);
+        }
+        .service-card.selected .tag { background: #ffffff; color: var(--leaf); }
+        .selected-services {
+            min-height: 58px;
+            padding: 16px 18px;
+            border: 1px dashed rgba(18,59,43,.28);
+            border-radius: 18px;
+            background: var(--sky);
+            color: var(--muted);
+            font-weight: 800;
+        }
+        .selected-services strong { color: var(--pine); }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+            background: rgba(16,37,30,.58);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-card {
+            width: min(560px, 100%);
+            padding: 26px;
+            border-radius: 34px;
+            background: #ffffff;
+            box-shadow: 0 28px 90px rgba(16,37,30,.28);
+            transform: translateY(18px) scale(.98);
+            transition: transform .25s ease;
+        }
+        .modal.active .modal-card { transform: translateY(0) scale(1); }
+        .modal-card h3 { color: var(--pine); font-size: clamp(1.7rem, 3vw, 2.4rem); margin-bottom: 12px; }
+        .modal-card p { color: var(--muted); font-weight: 700; margin-bottom: 14px; }
+        .modal-card ul { display: grid; gap: 9px; padding-left: 20px; color: var(--ink); font-weight: 800; }
+        .modal-actions { display: flex; justify-content: flex-end; margin-top: 22px; }
 
         .gallery {
             display: grid;
@@ -460,6 +503,14 @@
     <div class="fish" style="top: 20%; animation-delay: -4s;">🐟</div>
     <div class="fish" style="top: 58%; animation-delay: -17s; font-size: 1.7rem;">🐠</div>
     <a class="to-top" id="toTop" href="#top" aria-label="Наверх">↑</a>
+    <div class="modal" id="serviceModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h3 id="modalTitle"></h3>
+            <p id="modalText"></p>
+            <ul id="modalList"></ul>
+            <div class="modal-actions"><button class="btn btn-primary" id="modalClose" type="button">Понятно</button></div>
+        </div>
+    </div>
 
     <div class="page-shell">
         <header>
@@ -512,7 +563,7 @@
             <section class="section dark-band reveal" id="services">
                 <div class="section-head">
                     <h2>Форматы отдыха</h2>
-                    <p>Кликайте на карточку — выбранная услуга сразу появится в форме заявки.</p>
+                    <p>Кликайте на карточки — можно выбрать сразу несколько форматов, а подробности откроются во всплывающем окне.</p>
                 </div>
                 <div class="cards">
                     <article class="card service-card" data-service="Платная рыбалка"><span class="tag">популярно</span><h3>Платная рыбалка</h3><p>Доступ к водоёму, оборудованные мостки и помощь администратора.</p><span class="price">от 1 500 ₽</span></article>
@@ -553,13 +604,8 @@
                         <p>Напишите желаемую дату и формат отдыха — мы подберём домик, лодку и удобное время приезда.</p>
                     </aside>
                     <form id="bookingForm">
-                        <select id="service" required>
-                            <option value="">Выберите услугу</option>
-                            <option>Платная рыбалка</option>
-                            <option>Аренда домика</option>
-                            <option>Тур с проводником</option>
-                            <option>Аренда лодки</option>
-                        </select>
+                        <div class="selected-services" id="selectedServices">Выберите один или несколько форматов в блоке выше.</div>
+                        <input type="hidden" id="service" name="formats">
                         <input type="text" placeholder="Ваше имя" required>
                         <input type="tel" placeholder="Телефон" required>
                         <input type="date" aria-label="Дата приезда">
@@ -589,7 +635,7 @@
         const detailContent = {
             boats: {
                 title: 'Лодки и снасти без лишней суеты',
-                image: 'https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=1000&q=85',
+                image: 'https://images.unsplash.com/photo-1530982011887-3cc11cc85693?auto=format&fit=crop&w=1000&q=85',
                 text: 'Перед приездом мы готовим лодку, весла или мотор, жилеты и базовые снасти. Администратор подскажет, где лучше начать ловлю утром и куда сместиться к вечеру.',
                 points: ['лодки на 2–4 человека', 'помощь с подбором снастей', 'маршруты к спокойным точкам клёва']
             },
@@ -601,7 +647,7 @@
             },
             fire: {
                 title: 'Баня, костёр и вечер после улова',
-                image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85',
+                image: 'https://images.unsplash.com/photo-1478827387698-1527781a4887?auto=format&fit=crop&w=1000&q=85',
                 text: 'После рыбалки можно заказать баню, приготовить улов на мангале и спокойно провести вечер у костра. Этот блок добавляет сайту настроение настоящей базы отдыха.',
                 points: ['баня по предварительной записи', 'место для костра и мангала', 'вечерний отдых после рыбалки']
             }
@@ -629,19 +675,88 @@
             toTop.classList.toggle('visible', window.scrollY > 520);
         });
 
+        const serviceDetails = {
+            'Платная рыбалка': {
+                text: 'Формат для тех, кто приезжает на день: доступ к водоёму, мостки, помощь администратора и спокойные точки для ловли.',
+                points: ['подходит для одного дня', 'можно приехать со своими снастями', 'администратор подскажет актуальный клёв']
+            },
+            'Аренда домика': {
+                text: 'Комфортный вариант для семьи или компании, если хочется остаться у воды на ночь и не спешить домой после вечернего клёва.',
+                points: ['домики рядом с берегом', 'мангальная зона', 'варианты для выходных и праздников']
+            },
+            'Тур с проводником': {
+                text: 'Проводник помогает выбрать маршрут, подготовить лодку и найти точки, где больше шансов на хороший улов.',
+                points: ['сопровождение на водоёме', 'маршрут под погоду и сезон', 'можно совместить с арендой лодки']
+            }
+        };
+
+        const selectedFormats = new Set();
+        const selectedServices = document.getElementById('selectedServices');
+        const serviceInput = document.getElementById('service');
+        const modal = document.getElementById('serviceModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+        const modalList = document.getElementById('modalList');
+        const modalClose = document.getElementById('modalClose');
+
+        function updateSelectedServices() {
+            const formats = [...selectedFormats];
+            serviceInput.value = formats.join(', ');
+            selectedServices.innerHTML = formats.length
+                ? `<strong>Выбрано:</strong> ${formats.join(', ')}`
+                : 'Выберите один или несколько форматов в блоке выше.';
+        }
+
+        function openServiceModal(serviceName) {
+            const item = serviceDetails[serviceName];
+            modalTitle.textContent = serviceName;
+            modalText.textContent = item.text;
+            modalList.innerHTML = item.points.map((point) => `<li>${point}</li>`).join('');
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeServiceModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
         document.querySelectorAll('.service-card').forEach((card) => {
             card.addEventListener('click', () => {
-                document.getElementById('service').value = card.dataset.service;
-                document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const serviceName = card.dataset.service;
+                if (selectedFormats.has(serviceName)) {
+                    selectedFormats.delete(serviceName);
+                    card.classList.remove('selected');
+                } else {
+                    selectedFormats.add(serviceName);
+                    card.classList.add('selected');
+                }
+                updateSelectedServices();
+                openServiceModal(serviceName);
             });
+        });
+
+        modalClose.addEventListener('click', closeServiceModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) closeServiceModal();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeServiceModal();
         });
 
         document.getElementById('bookingForm').addEventListener('submit', (event) => {
             event.preventDefault();
             const message = document.getElementById('formMessage');
+            if (!selectedFormats.size) {
+                message.textContent = 'Выберите хотя бы один формат отдыха.';
+                return;
+            }
             message.textContent = '✓ Заявка отправлена! Скоро свяжемся.';
             setTimeout(() => {
                 event.target.reset();
+                selectedFormats.clear();
+                document.querySelectorAll('.service-card').forEach((card) => card.classList.remove('selected'));
+                updateSelectedServices();
                 message.textContent = '';
             }, 4200);
         });
